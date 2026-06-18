@@ -23,7 +23,7 @@ Next.js · TypeScript · Web Scraping · Content Delivery
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/arsenal.svg" width="600" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/arsenal.svg" width="720" />
 
 </div>
 
@@ -31,7 +31,7 @@ Next.js · TypeScript · Web Scraping · Content Delivery
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/dashboard.svg" width="600" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/dashboard.svg" width="720" />
 
 </div>
 
