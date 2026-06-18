@@ -21,48 +21,17 @@ Next.js · TypeScript · Web Scraping · Content Delivery
 
 <br/>
 
----
-
 <div align="center">
 
-### Arsenal
-
-</div>
-
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=ts,js,react,nextjs,nodejs,python,tailwind,sqlite,docker,git&theme=dark" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/arsenal.svg" width="600" />
 
 </div>
 
 <br/>
 
----
-
 <div align="center">
 
-### Activity
-
-</div>
-
-<div align="center">
-<table><tr>
-<td width="50%">
-
-<img src="https://github-readme-stats.vercel.app/api?username=2982136527&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=FF69B4&icon_color=FF69B4&text_color=c9d1d9&count_private=true" width="100%" />
-
-</td>
-<td width="50%">
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=2982136527&theme=tokyonight&hide_border=true&background=0d1117&stroke=FF69B4&ring=FF69B4&fire=FF69B4&currStreakLabel=FF69B4&sideLabels=FF69B4" width="100%" />
-
-</td>
-</tr></table>
-</div>
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=2982136527&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=FF69B4&text_color=c9d1d9&card_width=400" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/dashboard.svg" width="600" />
 
 </div>
 
