@@ -1,0 +1,123 @@
+name: update profile
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const OWNER = context.repo.owner;
+
+            // ── Fetch data via Octokit (no shell, no execSync) ──
+
+            const { data: user } = await github.rest.users.getByUsername({ username: OWNER });
+
+            // Paginate repos (includes private with token)
+            let repos = [];
+            for await (const response of github.paginate.iterator(github.rest.repos.listForAuthenticatedUser, { type: 'all', per_page: 100, sort: 'pushed', direction: 'desc' })) {
+              repos.push(...response.data);
+            }
+
+            // Language bytes
+            let langBytes = {};
+            for (const repo of repos.filter(r => !r.fork)) {
+              try {
+                const { data: langs } = await github.rest.repos.listLanguages({ owner: OWNER, repo: repo.name });
+                for (const [l, b] of Object.entries(langs)) langBytes[l] = (langBytes[l] || 0) + b;
+              } catch {}
+            }
+            const totalBytes = Object.values(langBytes).reduce((a, b) => a + b, 0);
+            const sorted = Object.entries(langBytes).sort((a, b) => b[1] - a[1]).slice(0, 4);
+            const lp = sorted.map(([l, b]) => ({ lang: l, pct: Math.round(b / totalBytes * 100) }));
+            const t3 = lp.slice(0, 3).reduce((s, l) => s + l.pct, 0);
+            if (lp.length >= 4) lp[3].pct = Math.max(0, 100 - t3);
+            while (lp.length < 4) lp.push({ lang: 'Other', pct: 0 });
+
+            // Contribution calendar via GraphQL
+            const cal = await github.graphql(`query($login:String!) {
+              user(login:$login) {
+                contributionsCollection {
+                  contributionCalendar {
+                    weeks { contributionDays { contributionCount date } }
+                  }
+                }
+              }
+            }`, { login: OWNER });
+            const weeks = cal.user.contributionsCollection.contributionCalendar.weeks;
+            const tc = weeks.reduce((s, w) => s + w.contributionDays.reduce((a, d) => a + d.contributionCount, 0), 0);
+
+            // ── Stats ──
+            const commits = tc, repoCount = repos.length, followers = user.followers;
+            const streak = Math.floor(tc / 12), streakPct = Math.min(streak, 100);
+            const dashOff = (188.5 - 188.5 * streakPct / 100).toFixed(1);
+
+            // ── Dashboard SVG ──
+            const bg = ['bar1', 'bar2', 'bar3', 'bar3'], bc = ['#FF69B4', '#D4A5FF', '#00D4FF', '#9B59B6'];
+            let lb = '';
+            lp.forEach((l, i) => {
+              const y = 195 + i * 30, yr = 185 + i * 30, bw = Math.round(l.pct * 6);
+              lb += `\n    <text x="50" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${bc[i]}" opacity="0.6">${l.lang}</text>\n    <rect x="155" y="${yr}" width="0" height="10" rx="5" fill="url(#${bg[i]})" opacity="0.8"><animate attributeName="width" from="0" to="${bw}" dur="1.2s" fill="freeze" begin="${(.8 + i * .2).toFixed(1)}s"/></rect>\n    <text x="${165 + bw}" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${bc[i]}" opacity="0.4">${l.pct}%</text>`;
+            });
+            const dash = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320"><defs><filter id="g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="bar1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#D4A5FF"/></linearGradient><linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient><linearGradient id="bar3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B59B6"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient><radialGradient id="orb1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="720" height="320" fill="#0a0a1a"/><circle cx="180" cy="160" r="120" fill="url(#orb1)"/><circle cx="540" cy="160" r="100" fill="url(#orb1)"/><g opacity="0.03" stroke="#FF69B4" stroke-width="0.5"><line x1="0" y1="0" x2="0" y2="320"/><line x1="72" y1="0" x2="72" y2="320"/><line x1="144" y1="0" x2="144" y2="320"/><line x1="216" y1="0" x2="216" y2="320"/><line x1="288" y1="0" x2="288" y2="320"/><line x1="360" y1="0" x2="360" y2="320"/><line x1="432" y1="0" x2="432" y2="320"/><line x1="504" y1="0" x2="504" y2="320"/><line x1="576" y1="0" x2="576" y2="320"/><line x1="648" y1="0" x2="648" y2="320"/><line x1="0" y1="0" x2="720" y2="0"/><line x1="0" y1="48" x2="720" y2="48"/><line x1="0" y1="96" x2="720" y2="96"/><line x1="0" y1="144" x2="720" y2="144"/><line x1="0" y1="192" x2="720" y2="192"/><line x1="0" y1="240" x2="720" y2="240"/><line x1="0" y1="288" x2="720" y2="288"/></g><text x="360" y="35" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">ACTIVITY DASHBOARD<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text><g><rect x="30" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/><text x="50" y="82" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text><text x="50" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text><rect x="50" y="128" width="0" height="3" rx="1.5" fill="url(#bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect><rect x="50" y="128" width="165" height="3" rx="1.5" fill="url(#bar1)" opacity="0.1"/></g><g><rect x="258" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/><text x="278" y="82" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text><text x="278" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text><rect x="278" y="128" width="0" height="3" rx="1.5" fill="url(#bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect><rect x="278" y="128" width="110" height="3" rx="1.5" fill="url(#bar2)" opacity="0.1"/></g><g><rect x="486" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#00D4FF" stroke-width="0.5" stroke-opacity="0.15"/><text x="506" y="82" font-family="'Courier New', monospace" font-size="11" fill="#00D4FF" opacity="0.5" letter-spacing="3">FOLLOWERS</text><text x="506" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text><rect x="506" y="128" width="0" height="3" rx="1.5" fill="url(#bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect><rect x="506" y="128" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#bar3)" opacity="0.1"/></g><line x1="50" y1="160" x2="670" y2="160" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>${lb}<g transform="translate(630, 220)"><circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.1" stroke-dasharray="226.2" stroke-dashoffset="0"/><circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.7" stroke-dasharray="226.2" stroke-dashoffset="226.2" stroke-linecap="round" transform="rotate(-90)"><animate attributeName="stroke-dashoffset" from="226.2" to="${dashOff}" dur="1.5s" fill="freeze" begin="0.5s"/></circle><text x="0" y="6" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" font-weight="bold" fill="#FF69B4">${streakPct}%<animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></text><text x="0" y="56" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#FF69B4" opacity="0.4">STREAK</text></g></svg>`;
+            fs.writeFileSync('dashboard.svg', dash);
+
+            // ── Contribution Snake SVG ──
+            const COLS = weeks.length, ROWS = 7, CELL = 12, GAP = 2, STEP = 14, PADX = 35, PADY = 22;
+            const W = PADX * 2 + COLS * STEP, H = PADY + ROWS * STEP + 30;
+            const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+            weeks.forEach((w, wi) => { w.contributionDays.forEach(d => { const dow = new Date(d.date).getDay(); if (wi < COLS && dow < ROWS) grid[dow][wi] = d.contributionCount; }); });
+            function lc(n) { if (n === 0) return '#161b22'; if (n <= 3) return '#0e4429'; if (n <= 6) return '#006d32'; if (n <= 9) return '#26a641'; return '#39d353'; }
+            function xy(c, r) { return { x: PADX + c * STEP + CELL / 2, y: PADY + r * STEP + CELL / 2 }; }
+            const pp = [];
+            for (let c = 0; c < COLS; c++) { const rs = c % 2 === 0 ? Array.from({ length: ROWS }, (_, i) => i) : Array.from({ length: ROWS }, (_, i) => ROWS - 1 - i); for (const r of rs) if (grid[r][c] > 0) pp.push(xy(c, r)); }
+            let pd = pp.length > 0 ? `M${pp[0].x},${pp[0].y}` : '';
+            for (let i = 1; i < pp.length; i++) pd += ` L${pp[i].x},${pp[i].y}`;
+            let gc = '';
+            for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) gc += `<rect x="${PADX + c * STEP}" y="${PADY + r * STEP}" width="${CELL}" height="${CELL}" rx="2" fill="${lc(grid[r][c])}" opacity="0.3"/>\n`;
+            let cg = '';
+            pp.forEach((p, i) => { cg += `<rect x="${p.x - CELL / 2}" y="${p.y - CELL / 2}" width="${CELL}" height="${CELL}" rx="2" fill="#00ff88" opacity="0"><animate attributeName="opacity" values="0;0.7;0.25" dur="5s" fill="freeze" begin="${(i * .04).toFixed(2)}s" repeatCount="indefinite"/></rect>\n`; });
+            let pl = 0; for (let i = 1; i < pp.length; i++) { const dx = pp[i].x - pp[i - 1].x, dy = pp[i].y - pp[i - 1].y; pl += Math.sqrt(dx * dx + dy * dy); } pl = Math.ceil(pl) + 100;
+            const snake = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><filter id="g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00ff88"/><stop offset="50%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient><linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="1"/></linearGradient></defs><rect width="${W}" height="${H}" fill="#0a0a1a"/><g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">${Array.from({ length: ROWS + 1 }, (_, i) => `<line x1="${PADX}" y1="${PADY + i * STEP}" x2="${PADX + COLS * STEP}" y2="${PADY + i * STEP}"/>`).join('')}</g>${gc}<path d="${pd}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.06" filter="url(#gf)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path><path d="${pd}" fill="none" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.9" filter="url(#g)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>${cg}<circle r="5" fill="#00ff88" filter="url(#gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pd}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle><text x="${W / 2}" y="${H - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text></svg>`;
+            fs.writeFileSync('contribution-snake.svg', snake);
+
+            // ── Projects SVG ──
+            const nonFork = repos.filter(r => !r.fork);
+            const COLS_P = 3, COL_W = 215, COL_GAP = 20, PAD_P = 30, ROW_H = 52;
+            const rows_P = Math.ceil(nonFork.length / COLS_P);
+            const PW = 720, PH = 50 + rows_P * ROW_H + 20;
+            function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+            function trunc(s, n) { s = String(s||''); return s.length > n ? s.slice(0, n) + '...' : s; }
+            let projRows = '';
+            const colors_P = ['#FF69B4','#D4A5FF','#00D4FF','#00ff88','#FF69B4','#D4A5FF'];
+            nonFork.forEach((repo, i) => {
+              const col = i % COLS_P, row = Math.floor(i / COLS_P);
+              const x = PAD_P + col * (COL_W + COL_GAP);
+              const y = 50 + row * ROW_H;
+              const name = esc(repo.name);
+              const desc = esc(trunc(repo.description || 'No description', 28));
+              const priv = repo.private ? ' &#x1f512;' : '';
+              const langDot = repo.language ? `<circle cx="${x}" cy="${y + 22}" r="3" fill="${colors_P[i % colors_P.length]}" opacity="0.6"/>` : '';
+              const langText = repo.language ? `<text x="${x + 8}" y="${y + 26}" font-family="sans-serif" font-size="9" fill="${colors_P[i % colors_P.length]}" opacity="0.5">${esc(repo.language)}</text>` : '';
+              projRows += `<text x="${x}" y="${y + 12}" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">${name}${priv}</text>
+  <text x="${x}" y="${y + 38}" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">${desc}</text>
+  ${langDot}${langText}
+  <rect x="${x - 8}" y="${y - 4}" width="${COL_W}" height="${ROW_H - 6}" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>`;
+            });
+            const projSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${PW}" height="${PH}" viewBox="0 0 ${PW} ${PH}"><defs><radialGradient id="pg1" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.05"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="${PW}" height="${PH}" fill="#0a0a1a"/><rect width="${PW}" height="${PH}" fill="url(#pg1)"/><g opacity="0.03" stroke="#FF69B4" stroke-width="0.5"><line x1="0" y1="0" x2="0" y2="${PH}"/><line x1="72" y1="0" x2="72" y2="${PH}"/><line x1="144" y1="0" x2="144" y2="${PH}"/><line x1="216" y1="0" x2="216" y2="${PH}"/><line x1="288" y1="0" x2="288" y2="${PH}"/><line x1="360" y1="0" x2="360" y2="${PH}"/><line x1="432" y1="0" x2="432" y2="${PH}"/><line x1="504" y1="0" x2="504" y2="${PH}"/><line x1="576" y1="0" x2="576" y2="${PH}"/><line x1="648" y1="0" x2="648" y2="${PH}"/></g><text x="${PW/2}" y="32" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">PROJECTS<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text><text x="${PW - 30}" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">${nonFork.length} repos</text>${projRows}</svg>`;
+            fs.writeFileSync('projects.svg', projSvg);
+
+            console.log(`Generated: ${commits} contributions, ${repoCount} repos, ${followers} followers, ${nonFork.length} projects`);
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dashboard.svg contribution-snake.svg projects.svg
+          git diff --cached --quiet || git commit -m "chore: update profile SVGs"
+          git push
