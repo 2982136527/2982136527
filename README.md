@@ -1,16 +1,25 @@
 <div align="center">
 
-### Hi there, I'm QiuHu! (ꈍᴗꈍ)
+### 你好呀，我是 QiuHu！(ꈍᴗꈍ)
 
 <img src="https://media.tenor.com/images/a5b8b6c1b4b4b4b4b4b4b4b4b4b4b4b4/tenor.gif" width="200" alt="cute wave"/>
 
 <br/>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF69B4&center=true&vCenter=true&width=435&lines=Welcome+to+my+profile!+%E2%9C%A8;Full-stack+Developer;Anime+lover+%F0%9F%8C%B8;Always+learning+new+things)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF69B4&center=true&vCenter=true&width=435&lines=欢迎来到我的主页!+%E2%9C%A8;全栈开发者;Anime+lover+%F0%9F%8C%B8;永远在学习新东西)](https://git.io/typing-svg)
 
 </div>
 
 ---
+
+### 关于我
+
+- 🔭 正在开发 **PicaX** — 多源内容聚合平台
+- 🌱 探索 **Next.js**、**TypeScript** 和 **Web 爬虫**
+- 💬 什么都可以问我，乐意帮忙！
+- ⚡ 有趣的事：我喜欢做大家真正会用的东西
+
+<br/>
 
 ### About Me
 
@@ -23,7 +32,7 @@
 
 ---
 
-### Tech Stack
+### 技术栈 / Tech Stack
 
 <div align="center">
 
@@ -44,7 +53,7 @@
 
 ---
 
-### GitHub Stats
+### GitHub 数据 / Stats
 
 <div align="center">
 
@@ -64,7 +73,7 @@
 
 ---
 
-### Contribution Snake
+### 贡献贪吃蛇 / Contribution Snake
 
 <div align="center">
 
@@ -78,7 +87,7 @@
 
 <div align="center">
 
-### Thanks for visiting! (≧◡≦) ♡
+### 感谢来访！Thanks for visiting! (≧◡≦) ♡
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=2982136527&color=FF69B4&style=for-the-badge&label=Profile+Views)
 
