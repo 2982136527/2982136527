@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="260" viewBox="0 0 600 260">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="312" viewBox="0 0 720 312">
   <defs>
     <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -6,6 +6,7 @@
     <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.06"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient>
     <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#9B59B6"/></linearGradient>
   </defs>
+  <g transform="scale(1.2)">
   <style>
     @keyframes o1{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
     @keyframes o2{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
@@ -143,5 +144,6 @@
       TECH ARSENAL
       <animate attributeName="opacity" values="0.4;0.6;0.4" dur="4s" repeatCount="indefinite"/>
     </text>
+  </g>
   </g>
 </svg>
