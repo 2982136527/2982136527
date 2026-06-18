@@ -37,12 +37,8 @@ Next.js · TypeScript · Web Scraping · Content Delivery
 
 <br/>
 
----
-
 <div align="center">
 
-### Contribution
-
-![snake gif](https://raw.githubusercontent.com/2982136527/2982136527/output/github-contribution-grid-snake-dark.svg)
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/contribution-snake.svg" width="720" />
 
 </div>
