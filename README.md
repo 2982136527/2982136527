@@ -1,15 +1,6 @@
 <div align="center">
 
-<pre>
- ██████╗ ██╗ ██╗   ██╗██╗  ██╗██╗   ██╗
-██╔═══██╗██║ ██║   ██║██║  ██║██║   ██║
-██║   ██║██║ ██║   ██║███████║██║   ██║
-██║▄▄ ██║██║ ╚██╗ ██╔╝██╔══██║██║   ██║
-╚██████╔╝██║  ╚████╔╝ ██║  ██║╚██████╔╝
- ╚══▀▀═╝ ╚═╝   ╚═══╝  ╚═╝  ╚═╝ ╚═════╝
-</pre>
-
-<img width="400" src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:FF69B4,100:0d1117&height=180&section=footer&text=QiuHu&fontSize=60&fontColor=FF69B4&fontAlignY=40&desc=Developer%20%7C%20Builder%20%7C%20Creator&descSize=16&descAlignY=60&animation=fadeIn" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/hero-banner.svg" width="100%" />
 
 <br/>
 
@@ -84,13 +75,5 @@ Next.js · TypeScript · Web Scraping · Content Delivery
 ### Contribution
 
 ![snake gif](https://raw.githubusercontent.com/2982136527/2982136527/output/github-contribution-grid-snake-dark.svg)
-
-</div>
-
-<br/>
-
-<div align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF69B4,50:0d1117,100:FF69B4&height=100&section=footer" width="100%" />
 
 </div>
