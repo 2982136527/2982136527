@@ -3,7 +3,7 @@ name: update profile SVGs
 on:
   schedule:
     - cron: "23 */6 * * *"
-  workflow_dispatch:
+  workflow_dispatch: # manual trigger
 
 permissions:
   contents: write
@@ -87,7 +87,10 @@ jobs:
               const y = 195 + i * 30;
               const yRect = 185 + i * 30;
               const barW = Math.round(l.pct * 6);
-              langBars += `\n    <text x="50" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.6">${l.lang}</text>\n    <rect x="155" y="${yRect}" width="0" height="10" rx="5" fill="url(#${barGradIds[i]})" opacity="0.8"><animate attributeName="width" from="0" to="${barW}" dur="1.2s" fill="freeze" begin="${(0.8 + i * 0.2).toFixed(1)}s"/></rect>\n    <text x="${165 + barW}" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.4">${l.pct}%</text>`;
+              langBars += `
+    <text x="50" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.6">${l.lang}</text>
+    <rect x="155" y="${yRect}" width="0" height="10" rx="5" fill="url(#${barGradIds[i]})" opacity="0.8"><animate attributeName="width" from="0" to="${barW}" dur="1.2s" fill="freeze" begin="${(0.8 + i * 0.2).toFixed(1)}s"/></rect>
+    <text x="${165 + barW}" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.4">${l.pct}%</text>`;
             });
 
             const dashboard = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320">
@@ -161,13 +164,15 @@ jobs:
             let gridCells = '';
             for (let r = 0; r < ROWS; r++) {
               for (let c = 0; c < COLS; c++) {
-                gridCells += `<rect x="${PADX + c * STEP}" y="${PADY + r * STEP}" width="${CELL}" height="${CELL}" rx="2" fill="${levelColor(grid[r][c])}" opacity="0.3"/>\n`;
+                gridCells += `<rect x="${PADX + c * STEP}" y="${PADY + r * STEP}" width="${CELL}" height="${CELL}" rx="2" fill="${levelColor(grid[r][c])}" opacity="0.3"/>
+`;
               }
             }
 
             let cellGlows = '';
             pathPoints.forEach((pt, i) => {
-              cellGlows += `<rect x="${pt.x - CELL / 2}" y="${pt.y - CELL / 2}" width="${CELL}" height="${CELL}" rx="2" fill="#00ff88" opacity="0"><animate attributeName="opacity" values="0;0.7;0.25" dur="5s" fill="freeze" begin="${(i * 0.04).toFixed(2)}s" repeatCount="indefinite"/></rect>\n`;
+              cellGlows += `<rect x="${pt.x - CELL / 2}" y="${pt.y - CELL / 2}" width="${CELL}" height="${CELL}" rx="2" fill="#00ff88" opacity="0"><animate attributeName="opacity" values="0;0.7;0.25" dur="5s" fill="freeze" begin="${(i * 0.04).toFixed(2)}s" repeatCount="indefinite"/></rect>
+`;
             });
 
             let pathLen = 0;
@@ -187,14 +192,16 @@ jobs:
   </defs>
   <rect width="${W}" height="${H}" fill="#0a0a1a"/>
   <g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">
-${Array.from({ length: ROWS + 1 }, (_, i) => `    <line x1="${PADX}" y1="${PADY + i * STEP}" x2="${PADX + COLS * STEP}" y2="${PADY + i * STEP}"/>`).join('\n')}
+${Array.from({ length: ROWS + 1 }, (_, i) => `    <line x1="${PADX}" y1="${PADY + i * STEP}" x2="${PADX + COLS * STEP}" y2="${PADY + i * STEP}"/>`).join('
+')}
   </g>
   ${gridCells}
   <path d="${pathD}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pathLen}" stroke-dashoffset="${pathLen}" opacity="0.06" filter="url(#gf)"><animate attributeName="stroke-dashoffset" from="${pathLen}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
   <path d="${pathD}" fill="none" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pathLen}" stroke-dashoffset="${pathLen}" opacity="0.9" filter="url(#g)"><animate attributeName="stroke-dashoffset" from="${pathLen}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
   ${cellGlows}
   <circle r="5" fill="#00ff88" filter="url(#gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pathD}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle>
-  ${[0.2, 0.35, 0.5, 0.65, 0.8].map((_, i) => `<circle r="0" fill="${['#00ff88','#FF69B4','#00D4FF','#D4A5FF','#00ff88'][i]}" opacity="0"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" path="${pathD}"/><animate attributeName="r" values="0;2.5;0" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="5s" repeatCount="indefinite"/></circle>`).join('\n  ')}
+  ${[0.2, 0.35, 0.5, 0.65, 0.8].map((_, i) => `<circle r="0" fill="${['#00ff88','#FF69B4','#00D4FF','#D4A5FF','#00ff88'][i]}" opacity="0"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" path="${pathD}"/><animate attributeName="r" values="0;2.5;0" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="5s" repeatCount="indefinite"/></circle>`).join('
+  ')}
   <rect x="-60" y="0" width="60" height="${H}" fill="url(#tg)" opacity="0.04"><animateTransform attributeName="transform" type="translate" from="-60,0" to="${W + 60},0" dur="5s" repeatCount="indefinite"/></rect>
   <text x="${W / 2}" y="${H - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>
 </svg>`;
