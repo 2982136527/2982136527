@@ -20,9 +20,9 @@ jobs:
 
             const { data: user } = await github.rest.users.getByUsername({ username: OWNER });
 
-            // Paginate repos (up to 500)
+            // Paginate repos (includes private with token)
             let repos = [];
-            for await (const response of github.paginate.iterator(github.rest.repos.listForUser, { username: OWNER, type: 'all', per_page: 100 })) {
+            for await (const response of github.paginate.iterator(github.rest.repos.listForAuthenticatedUser, { type: 'all', per_page: 100, sort: 'pushed', direction: 'desc' })) {
               repos.push(...response.data);
             }
 
@@ -88,10 +88,36 @@ jobs:
             const snake = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><filter id="g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00ff88"/><stop offset="50%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient><linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="1"/></linearGradient></defs><rect width="${W}" height="${H}" fill="#0a0a1a"/><g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">${Array.from({ length: ROWS + 1 }, (_, i) => `<line x1="${PADX}" y1="${PADY + i * STEP}" x2="${PADX + COLS * STEP}" y2="${PADY + i * STEP}"/>`).join('')}</g>${gc}<path d="${pd}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.06" filter="url(#gf)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path><path d="${pd}" fill="none" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.9" filter="url(#g)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>${cg}<circle r="5" fill="#00ff88" filter="url(#gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pd}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle><text x="${W / 2}" y="${H - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text></svg>`;
             fs.writeFileSync('contribution-snake.svg', snake);
 
-            console.log(`Generated: ${commits} contributions, ${repoCount} repos, ${followers} followers`);
+            // ── Projects SVG ──
+            const nonFork = repos.filter(r => !r.fork);
+            const COLS_P = 3, COL_W = 215, COL_GAP = 20, PAD_P = 30, ROW_H = 52;
+            const rows_P = Math.ceil(nonFork.length / COLS_P);
+            const PW = 720, PH = 50 + rows_P * ROW_H + 20;
+            function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+            function trunc(s, n) { s = String(s||''); return s.length > n ? s.slice(0, n) + '...' : s; }
+            let projRows = '';
+            const colors_P = ['#FF69B4','#D4A5FF','#00D4FF','#00ff88','#FF69B4','#D4A5FF'];
+            nonFork.forEach((repo, i) => {
+              const col = i % COLS_P, row = Math.floor(i / COLS_P);
+              const x = PAD_P + col * (COL_W + COL_GAP);
+              const y = 50 + row * ROW_H;
+              const name = esc(repo.name);
+              const desc = esc(trunc(repo.description || 'No description', 28));
+              const priv = repo.private ? ' &#x1f512;' : '';
+              const langDot = repo.language ? `<circle cx="${x}" cy="${y + 22}" r="3" fill="${colors_P[i % colors_P.length]}" opacity="0.6"/>` : '';
+              const langText = repo.language ? `<text x="${x + 8}" y="${y + 26}" font-family="sans-serif" font-size="9" fill="${colors_P[i % colors_P.length]}" opacity="0.5">${esc(repo.language)}</text>` : '';
+              projRows += `<text x="${x}" y="${y + 12}" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">${name}${priv}</text>
+  <text x="${x}" y="${y + 38}" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">${desc}</text>
+  ${langDot}${langText}
+  <rect x="${x - 8}" y="${y - 4}" width="${COL_W}" height="${ROW_H - 6}" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>`;
+            });
+            const projSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${PW}" height="${PH}" viewBox="0 0 ${PW} ${PH}"><defs><radialGradient id="pg1" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.05"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="${PW}" height="${PH}" fill="#0a0a1a"/><rect width="${PW}" height="${PH}" fill="url(#pg1)"/><g opacity="0.03" stroke="#FF69B4" stroke-width="0.5"><line x1="0" y1="0" x2="0" y2="${PH}"/><line x1="72" y1="0" x2="72" y2="${PH}"/><line x1="144" y1="0" x2="144" y2="${PH}"/><line x1="216" y1="0" x2="216" y2="${PH}"/><line x1="288" y1="0" x2="288" y2="${PH}"/><line x1="360" y1="0" x2="360" y2="${PH}"/><line x1="432" y1="0" x2="432" y2="${PH}"/><line x1="504" y1="0" x2="504" y2="${PH}"/><line x1="576" y1="0" x2="576" y2="${PH}"/><line x1="648" y1="0" x2="648" y2="${PH}"/></g><text x="${PW/2}" y="32" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">PROJECTS<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text><text x="${PW - 30}" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">${nonFork.length} repos</text>${projRows}</svg>`;
+            fs.writeFileSync('projects.svg', projSvg);
+
+            console.log(`Generated: ${commits} contributions, ${repoCount} repos, ${followers} followers, ${nonFork.length} projects`);
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dashboard.svg contribution-snake.svg
+          git add dashboard.svg contribution-snake.svg projects.svg
           git diff --cached --quiet || git commit -m "chore: update profile SVGs"
           git push
