@@ -1,0 +1,210 @@
+name: update profile SVGs
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/github-script@v7
+        id: data
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const { data: user } = await github.rest.users.getByUsername({ username: owner });
+            const { data: repos } = await github.rest.repos.listForUser({ username: owner, type: 'all', per_page: 100 });
+            const repoCount = repos.length;
+            const followers = user.followers;
+
+            let langBytes = {};
+            for (const repo of repos.filter(r => !r.fork)) {
+              try {
+                const { data: langs } = await github.rest.repos.listLanguages({ owner, repo: repo.name });
+                for (const [lang, bytes] of Object.entries(langs)) {
+                  langBytes[lang] = (langBytes[lang] || 0) + bytes;
+                }
+              } catch {}
+            }
+
+            const totalBytes = Object.values(langBytes).reduce((a, b) => a + b, 0);
+            const sorted = Object.entries(langBytes).sort((a, b) => b[1] - a[1]).slice(0, 4);
+            const langPercentages = sorted.map(([lang, bytes]) => ({ lang, pct: Math.round((bytes / totalBytes) * 100) }));
+            const top3 = langPercentages.slice(0, 3).reduce((s, l) => s + l.pct, 0);
+            if (langPercentages.length >= 4) langPercentages[3].pct = Math.max(0, 100 - top3);
+            while (langPercentages.length < 4) langPercentages.push({ lang: 'Other', pct: 0 });
+
+            core.setOutput('repos', repoCount);
+            core.setOutput('followers', followers);
+            core.setOutput('langs', JSON.stringify(langPercentages));
+
+      - uses: actions/github-script@v7
+        id: calendar
+        with:
+          script: |
+            const { data } = await github.graphql(`query {
+              user(login: "${context.repo.owner}") {
+                contributionsCollection {
+                  contributionCalendar {
+                    weeks {
+                      contributionDays { contributionCount date }
+                    }
+                  }
+                }
+              }
+            }`);
+            core.setOutput('calendar', JSON.stringify(data.user.contributionsCollection.contributionCalendar.weeks));
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const repoCount = parseInt('${{ steps.data.outputs.repos }}');
+            const followers = parseInt('${{ steps.data.outputs.followers }}');
+            const langs = JSON.parse('${{ steps.data.outputs.langs }}');
+            const weeks = JSON.parse('${{ steps.calendar.outputs.calendar }}');
+
+            const totalContributions = weeks.reduce((sum, w) =>
+              sum + w.contributionDays.reduce((s, d) => s + d.contributionCount, 0), 0);
+            const commits = totalContributions;
+            const streak = Math.floor(commits / 12);
+            const streakPct = Math.min(streak, 100);
+            const dashOffset = 188.5 - (188.5 * streakPct / 100);
+
+            // ── Dashboard SVG ──
+            const barGradIds = ['bar1', 'bar2', 'bar3', 'bar3'];
+            const barColors = ['#FF69B4', '#D4A5FF', '#00D4FF', '#9B59B6'];
+            let langBars = '';
+            langs.forEach((l, i) => {
+              const y = 195 + i * 30;
+              const yRect = 185 + i * 30;
+              const barW = Math.round(l.pct * 6);
+              langBars += `\n    <text x="50" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.6">${l.lang}</text>\n    <rect x="155" y="${yRect}" width="0" height="10" rx="5" fill="url(#${barGradIds[i]})" opacity="0.8"><animate attributeName="width" from="0" to="${barW}" dur="1.2s" fill="freeze" begin="${(0.8 + i * 0.2).toFixed(1)}s"/></rect>\n    <text x="${165 + barW}" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${barColors[i]}" opacity="0.4">${l.pct}%</text>`;
+            });
+
+            const dashboard = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320">
+  <defs>
+    <filter id="g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="bar1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#D4A5FF"/></linearGradient>
+    <linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
+    <linearGradient id="bar3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B59B6"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
+    <radialGradient id="orb1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="720" height="320" fill="#0a0a1a"/>
+  <circle cx="180" cy="160" r="120" fill="url(#orb1)"/>
+  <circle cx="540" cy="160" r="100" fill="url(#orb1)"/>
+  <g opacity="0.03" stroke="#FF69B4" stroke-width="0.5"><line x1="0" y1="0" x2="0" y2="320"/><line x1="72" y1="0" x2="72" y2="320"/><line x1="144" y1="0" x2="144" y2="320"/><line x1="216" y1="0" x2="216" y2="320"/><line x1="288" y1="0" x2="288" y2="320"/><line x1="360" y1="0" x2="360" y2="320"/><line x1="432" y1="0" x2="432" y2="320"/><line x1="504" y1="0" x2="504" y2="320"/><line x1="576" y1="0" x2="576" y2="320"/><line x1="648" y1="0" x2="648" y2="320"/><line x1="0" y1="0" x2="720" y2="0"/><line x1="0" y1="48" x2="720" y2="48"/><line x1="0" y1="96" x2="720" y2="96"/><line x1="0" y1="144" x2="720" y2="144"/><line x1="0" y1="192" x2="720" y2="192"/><line x1="0" y1="240" x2="720" y2="240"/><line x1="0" y1="288" x2="720" y2="288"/></g>
+  <text x="360" y="35" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">ACTIVITY DASHBOARD<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
+  <g><rect x="30" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/><text x="50" y="82" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text><text x="50" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text><rect x="50" y="128" width="0" height="3" rx="1.5" fill="url(#bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect><rect x="50" y="128" width="165" height="3" rx="1.5" fill="url(#bar1)" opacity="0.1"/></g>
+  <g><rect x="258" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/><text x="278" y="82" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text><text x="278" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text><rect x="278" y="128" width="0" height="3" rx="1.5" fill="url(#bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect><rect x="278" y="128" width="110" height="3" rx="1.5" fill="url(#bar2)" opacity="0.1"/></g>
+  <g><rect x="486" y="55" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#00D4FF" stroke-width="0.5" stroke-opacity="0.15"/><text x="506" y="82" font-family="'Courier New', monospace" font-size="11" fill="#00D4FF" opacity="0.5" letter-spacing="3">FOLLOWERS</text><text x="506" y="118" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text><rect x="506" y="128" width="0" height="3" rx="1.5" fill="url(#bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect><rect x="506" y="128" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#bar3)" opacity="0.1"/></g>
+  <line x1="50" y1="160" x2="670" y2="160" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>
+  ${langBars}
+  <g transform="translate(630, 220)"><circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.1" stroke-dasharray="226.2" stroke-dashoffset="0"/><circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.7" stroke-dasharray="226.2" stroke-dashoffset="226.2" stroke-linecap="round" transform="rotate(-90)"><animate attributeName="stroke-dashoffset" from="226.2" to="${dashOffset.toFixed(1)}" dur="1.5s" fill="freeze" begin="0.5s"/></circle><text x="0" y="6" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" font-weight="bold" fill="#FF69B4">${streakPct}%<animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></text><text x="0" y="56" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#FF69B4" opacity="0.4">STREAK</text></g>
+  <rect x="-60" y="0" width="60" height="320" fill="url(#bar1)" opacity="0.03"><animateTransform attributeName="transform" type="translate" from="-60,0" to="780,0" dur="4s" repeatCount="indefinite"/></rect>
+</svg>`;
+
+            fs.writeFileSync('dashboard.svg', dashboard);
+
+            // ── Snake SVG ──
+            const COLS = weeks.length;
+            const ROWS = 7;
+            const CELL = 12;
+            const GAP = 2;
+            const STEP = CELL + GAP;
+            const PADX = 35;
+            const PADY = 22;
+            const W = PADX * 2 + COLS * STEP;
+            const H = PADY + ROWS * STEP + 30;
+
+            const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+            weeks.forEach((week, wi) => {
+              week.contributionDays.forEach(day => {
+                const dow = new Date(day.date).getDay();
+                if (wi < COLS && dow < ROWS) grid[dow][wi] = day.contributionCount;
+              });
+            });
+
+            function levelColor(n) {
+              if (n === 0) return '#161b22';
+              if (n <= 3) return '#0e4429';
+              if (n <= 6) return '#006d32';
+              if (n <= 9) return '#26a641';
+              return '#39d353';
+            }
+            function cellXY(c, r) { return { x: PADX + c * STEP + CELL / 2, y: PADY + r * STEP + CELL / 2 }; }
+
+            const pathPoints = [];
+            for (let c = 0; c < COLS; c++) {
+              const rows = c % 2 === 0
+                ? Array.from({ length: ROWS }, (_, i) => i)
+                : Array.from({ length: ROWS }, (_, i) => ROWS - 1 - i);
+              for (const r of rows) {
+                if (grid[r][c] > 0) pathPoints.push(cellXY(c, r));
+              }
+            }
+
+            let pathD = '';
+            if (pathPoints.length > 0) {
+              pathD = `M${pathPoints[0].x},${pathPoints[0].y}`;
+              for (let i = 1; i < pathPoints.length; i++) pathD += ` L${pathPoints[i].x},${pathPoints[i].y}`;
+            }
+
+            let gridCells = '';
+            for (let r = 0; r < ROWS; r++) {
+              for (let c = 0; c < COLS; c++) {
+                gridCells += `<rect x="${PADX + c * STEP}" y="${PADY + r * STEP}" width="${CELL}" height="${CELL}" rx="2" fill="${levelColor(grid[r][c])}" opacity="0.3"/>\n`;
+              }
+            }
+
+            let cellGlows = '';
+            pathPoints.forEach((pt, i) => {
+              cellGlows += `<rect x="${pt.x - CELL / 2}" y="${pt.y - CELL / 2}" width="${CELL}" height="${CELL}" rx="2" fill="#00ff88" opacity="0"><animate attributeName="opacity" values="0;0.7;0.25" dur="5s" fill="freeze" begin="${(i * 0.04).toFixed(2)}s" repeatCount="indefinite"/></rect>\n`;
+            });
+
+            let pathLen = 0;
+            for (let i = 1; i < pathPoints.length; i++) {
+              const dx = pathPoints[i].x - pathPoints[i - 1].x;
+              const dy = pathPoints[i].y - pathPoints[i - 1].y;
+              pathLen += Math.sqrt(dx * dx + dy * dy);
+            }
+            pathLen = Math.ceil(pathLen) + 100;
+
+            const snake = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <filter id="g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00ff88"/><stop offset="50%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+    <linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="1"/></linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="#0a0a1a"/>
+  <g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">
+${Array.from({ length: ROWS + 1 }, (_, i) => `    <line x1="${PADX}" y1="${PADY + i * STEP}" x2="${PADX + COLS * STEP}" y2="${PADY + i * STEP}"/>`).join('\n')}
+  </g>
+  ${gridCells}
+  <path d="${pathD}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pathLen}" stroke-dashoffset="${pathLen}" opacity="0.06" filter="url(#gf)"><animate attributeName="stroke-dashoffset" from="${pathLen}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
+  <path d="${pathD}" fill="none" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pathLen}" stroke-dashoffset="${pathLen}" opacity="0.9" filter="url(#g)"><animate attributeName="stroke-dashoffset" from="${pathLen}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
+  ${cellGlows}
+  <circle r="5" fill="#00ff88" filter="url(#gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pathD}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle>
+  ${[0.2, 0.35, 0.5, 0.65, 0.8].map((_, i) => `<circle r="0" fill="${['#00ff88','#FF69B4','#00D4FF','#D4A5FF','#00ff88'][i]}" opacity="0"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" path="${pathD}"/><animate attributeName="r" values="0;2.5;0" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="5s" repeatCount="indefinite"/></circle>`).join('\n  ')}
+  <rect x="-60" y="0" width="60" height="${H}" fill="url(#tg)" opacity="0.04"><animateTransform attributeName="transform" type="translate" from="-60,0" to="${W + 60},0" dur="5s" repeatCount="indefinite"/></rect>
+  <text x="${W / 2}" y="${H - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>
+</svg>`;
+
+            fs.writeFileSync('contribution-snake.svg', snake);
+            console.log('Generated dashboard.svg and contribution-snake.svg');
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dashboard.svg contribution-snake.svg
+          git diff --cached --quiet || git commit -m "chore: update profile SVGs with latest data"
+          git push
