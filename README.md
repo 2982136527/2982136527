@@ -12,14 +12,6 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/projects.svg" width="720" />
-
-</div>
-
-<br/>
-
-<div align="center">
-
 <img src="https://raw.githubusercontent.com/2982136527/2982136527/main/arsenal.svg" width="720" />
 
 </div>
@@ -28,14 +20,6 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/dashboard.svg" width="720" />
-
-</div>
-
-<br/>
-
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/contribution-snake.svg" width="720" />
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/profile-card.svg" width="720" />
 
 </div>
