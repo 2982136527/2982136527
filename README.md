@@ -12,10 +12,7 @@
 
 <div align="center">
 
-```
-Building PicaX — multi-source content aggregation platform
-Next.js · TypeScript · Web Scraping · Content Delivery
-```
+<img src="https://raw.githubusercontent.com/2982136527/2982136527/main/projects.svg" width="720" />
 
 </div>
 
