@@ -121,4 +121,3 @@ jobs:
           git add dashboard.svg contribution-snake.svg projects.svg
           git diff --cached --quiet || git commit -m "chore: update profile SVGs"
           git push
-
