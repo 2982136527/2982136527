@@ -17,10 +17,9 @@ jobs:
             const OWNER = context.repo.owner;
             const REPO = context.repo.repo;
 
-            // ── Helper: download raw file from repo ──
-            async function downloadRaw(path) {
-              const { data } = await github.rest.repos.getContent({ owner: OWNER, repo: REPO, path });
-              return Buffer.from(data.content, 'base64').toString('utf8');
+            // ── Helper: read file from checked-out repo ──
+            function readLocal(path) {
+              return fs.readFileSync(path, 'utf8');
             }
 
             // ── Helper: extract inner SVG content ──
@@ -39,8 +38,8 @@ jobs:
             }
 
             // ── Download static SVGs ──
-            const heroSvg = await downloadRaw('hero-banner.svg');
-            const arsenalSvg = await downloadRaw('arsenal.svg');
+            const heroSvg = readLocal('hero-banner.svg');
+            const arsenalSvg = readLocal('arsenal.svg');
 
             // ── Process hero-banner (900x260) ──
             let heroInner = svgInner(heroSvg);
