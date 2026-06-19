@@ -15,12 +15,51 @@ jobs:
           script: |
             const fs = require('fs');
             const OWNER = context.repo.owner;
+            const REPO = context.repo.repo;
 
-            // ── Fetch data via Octokit ──
+            // ── Helper: download raw file from repo ──
+            async function downloadRaw(path) {
+              const { data } = await github.rest.repos.getContent({ owner: OWNER, repo: REPO, path });
+              return Buffer.from(data.content, 'base64').toString('utf8');
+            }
 
+            // ── Helper: extract inner SVG content ──
+            function svgInner(svg) {
+              const m = svg.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
+              return m ? m[1].trim() : '';
+            }
+
+            // ── Helper: prefix IDs in SVG content ──
+            function prefixIds(text, prefix, ids) {
+              for (const id of ids.sort((a,b) => b.length - a.length)) {
+                text = text.split(`id="${id}"`).join(`id="${prefix}${id}"`);
+                text = text.split(`url(#${id})`).join(`url(#${prefix}${id})`);
+              }
+              return text;
+            }
+
+            // ── Download static SVGs ──
+            const heroSvg = await downloadRaw('hero-banner.svg');
+            const arsenalSvg = await downloadRaw('arsenal.svg');
+
+            // ── Process hero-banner (900x260) ──
+            let heroInner = svgInner(heroSvg);
+            const heroIds = ['glow','glow-strong','aurora1','aurora2','text-grad','dot-glow','orb'];
+            heroInner = prefixIds(heroInner, 'h_', heroIds);
+            // Remove its background rect and grid
+            heroInner = heroInner.replace(/<rect[^>]*fill="#0a0a1a"[^>]*\/?>/, '');
+            heroInner = heroInner.replace(/<g opacity="0\.04"[^>]*>[\s\S]*?<\/g>/, '');
+
+            // ── Process arsenal (720x360) ──
+            let arsenalInner = svgInner(arsenalSvg);
+            const arsenalIds = ['glow','glow-s','glow-core','bg-glow','core-glow','ring-grad'];
+            arsenalInner = prefixIds(arsenalInner, 'a_', arsenalIds);
+            // Remove its background rects
+            arsenalInner = arsenalInner.replace(/<rect[^>]*fill="#0a0a1a"[^>]*\/?>/, '');
+            arsenalInner = arsenalInner.replace(/<rect[^>]*fill="url\(#a_bg-glow\)"[^>]*\/?>/, '');
+
+            // ── Fetch dynamic data via Octokit ──
             const { data: user } = await github.rest.users.getByUsername({ username: OWNER });
-
-            // Paginate repos (public via listForUser, private via PAT)
             let repos = [];
             for await (const r of github.paginate.iterator(github.rest.repos.listForUser, { username: OWNER, type: 'all', per_page: 100, sort: 'pushed', direction: 'desc' })) {
               repos.push(...r.data);
@@ -54,7 +93,7 @@ jobs:
             if (lp.length >= 4) lp[3].pct = Math.max(0, 100 - t3);
             while (lp.length < 4) lp.push({ lang: 'Other', pct: 0 });
 
-            // Contribution calendar via GraphQL
+            // Contribution calendar
             const cal = await github.graphql(`query($login:String!) {
               user(login:$login) {
                 contributionsCollection {
@@ -67,17 +106,16 @@ jobs:
             const weeks = cal.user.contributionsCollection.contributionCalendar.weeks;
             const tc = weeks.reduce((s, w) => s + w.contributionDays.reduce((a, d) => a + d.contributionCount, 0), 0);
 
-            // ── Stats ──
             const commits = tc, repoCount = repos.length, followers = user.followers;
             const streak = Math.floor(tc / 12), streakPct = Math.min(streak, 100);
             const dashOff = (188.5 - 188.5 * streakPct / 100).toFixed(1);
 
-            // ── Helper functions ──
             function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
             function trunc(s, n) { s = String(s||''); return s.length > n ? s.slice(0, n) + '...' : s; }
             function fmtDate(d) { if (!d) return ''; const dt = new Date(d); return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0'); }
 
-            // ── Dimensions ──
+            // ── Section offsets ──
+            const heroH = 260, arsenalH = 360, SEP = 15;
             const nonFork = repos.filter(r => !r.fork);
             const COLS_P = 3, COL_W = 215, COL_GAP = 20, PAD_P = 30, ROW_H = 58;
             const rows_P = Math.ceil(nonFork.length / COLS_P);
@@ -85,13 +123,11 @@ jobs:
             const dashH = 320;
             const COLS_S = weeks.length, ROWS_S = 7, CELL = 12, STEP = 14, PADX = 35, PADY = 22;
             const snakeH = PADY + ROWS_S * STEP + 30;
-            const SEP = 20;
-            const totalH = projH + SEP + dashH + SEP + snakeH;
+            const profileH = projH + SEP + dashH + SEP + snakeH;
+            const totalH = heroH + SEP + arsenalH + SEP + profileH;
             const PW = 720;
 
-            // ══════════════════════════════════════════
             // ── Projects section ──
-            // ══════════════════════════════════════════
             const colors_P = ['#FF69B4','#D4A5FF','#00D4FF','#00ff88','#FF69B4','#D4A5FF'];
             let projRows = '';
             nonFork.forEach((repo, i) => {
@@ -114,10 +150,8 @@ jobs:
             <text x="${PW - 30}" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">${nonFork.length} repos</text>
             ${projRows}`;
 
-            // ══════════════════════════════════════════
             // ── Dashboard section ──
-            // ══════════════════════════════════════════
-            const dOff = projH + SEP; // y offset for dashboard
+            const dOff = projH + SEP;
             const bg = ['bar1','bar2','bar3','bar3'], bc = ['#FF69B4','#D4A5FF','#00D4FF','#9B59B6'];
             let lb = '';
             lp.forEach((l, i) => {
@@ -130,23 +164,23 @@ jobs:
             <g>
             <rect x="30" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
             <text x="50" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
-            <text x="50" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
-            <rect x="50" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
-            <rect x="50" y="${dOff + 128}" width="165" height="3" rx="1.5" fill="url(#bar1)" opacity="0.1"/>
+            <text x="50" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
+            <rect x="50" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
+            <rect x="50" y="${dOff + 128}" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
             </g>
             <g>
             <rect x="258" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/>
             <text x="278" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text>
-            <text x="278" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
-            <rect x="278" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect>
-            <rect x="278" y="${dOff + 128}" width="110" height="3" rx="1.5" fill="url(#bar2)" opacity="0.1"/>
+            <text x="278" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#p_g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
+            <rect x="278" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect>
+            <rect x="278" y="${dOff + 128}" width="110" height="3" rx="1.5" fill="url(#p_bar2)" opacity="0.1"/>
             </g>
             <g>
             <rect x="486" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#00D4FF" stroke-width="0.5" stroke-opacity="0.15"/>
             <text x="506" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#00D4FF" opacity="0.5" letter-spacing="3">FOLLOWERS</text>
-            <text x="506" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text>
-            <rect x="506" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect>
-            <rect x="506" y="${dOff + 128}" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#bar3)" opacity="0.1"/>
+            <text x="506" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#p_g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text>
+            <rect x="506" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect>
+            <rect x="506" y="${dOff + 128}" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#p_bar3)" opacity="0.1"/>
             </g>
             <line x1="50" y1="${dOff + 160}" x2="670" y2="${dOff + 160}" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>
             ${lb}
@@ -157,11 +191,9 @@ jobs:
             <text x="0" y="56" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#FF69B4" opacity="0.4">STREAK</text>
             </g>`;
 
-            // ══════════════════════════════════════════
-            // ── Contribution Snake section ──
-            // ══════════════════════════════════════════
-            const sOff = projH + SEP + dashH + SEP; // y offset for snake
-            const W = PADX * 2 + COLS_S * STEP, H = snakeH;
+            // ── Snake section ──
+            const sOff = projH + SEP + dashH + SEP;
+            const SW = PADX * 2 + COLS_S * STEP, SH = snakeH;
             const grid = Array.from({ length: ROWS_S }, () => Array(COLS_S).fill(0));
             weeks.forEach((w, wi) => { w.contributionDays.forEach(d => { const dow = new Date(d.date).getDay(); if (wi < COLS_S && dow < ROWS_S) grid[dow][wi] = d.contributionCount; }); });
             function lc(n) { if (n === 0) return '#161b22'; if (n <= 3) return '#0e4429'; if (n <= 6) return '#006d32'; if (n <= 9) return '#26a641'; return '#39d353'; }
@@ -176,46 +208,72 @@ jobs:
             pp.forEach((p, i) => { cg += `<rect x="${p.x - CELL / 2}" y="${p.y - CELL / 2}" width="${CELL}" height="${CELL}" rx="2" fill="#00ff88" opacity="0"><animate attributeName="opacity" values="0;0.7;0.25" dur="5s" fill="freeze" begin="${(i * .04).toFixed(2)}s" repeatCount="indefinite"/></rect>`; });
             let pl = 0; for (let i = 1; i < pp.length; i++) { const dx = pp[i].x - pp[i - 1].x, dy = pp[i].y - pp[i - 1].y; pl += Math.sqrt(dx * dx + dy * dy); } pl = Math.ceil(pl) + 100;
             const snakeSection = `${gc}
-            <path d="${pd}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.06" filter="url(#gf)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
-            <path d="${pd}" fill="none" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.9" filter="url(#g)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
+            <path d="${pd}" fill="none" stroke="#00ff88" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.06" filter="url(#p_gf)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
+            <path d="${pd}" fill="none" stroke="url(#p_sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${pl}" stroke-dashoffset="${pl}" opacity="0.9" filter="url(#p_g)"><animate attributeName="stroke-dashoffset" from="${pl}" to="0" dur="5s" fill="freeze" repeatCount="indefinite"/></path>
             ${cg}
-            <circle r="5" fill="#00ff88" filter="url(#gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pd}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle>
-            <text x="${W / 2}" y="${sOff + H - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>`;
+            <circle r="5" fill="#00ff88" filter="url(#p_gf)" opacity="0.9"><animateMotion dur="5s" fill="freeze" repeatCount="indefinite" rotate="auto" path="${pd}"/><animate attributeName="r" values="5;7;5" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;1;0.9" dur="0.8s" repeatCount="indefinite"/></circle>
+            <text x="${SW / 2}" y="${sOff + SH - 10}" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#00ff88" opacity="0.4" letter-spacing="6">CONTRIBUTION GRID<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>`;
 
-            // ══════════════════════════════════════════
-            // ── Combine into single SVG ──
-            // ══════════════════════════════════════════
+            // ── Grid lines ──
             const gridLines = `<g opacity="0.03" stroke="#FF69B4" stroke-width="0.5">
-            <line x1="0" y1="0" x2="0" y2="${totalH}"/><line x1="72" y1="0" x2="72" y2="${totalH}"/><line x1="144" y1="0" x2="144" y2="${totalH}"/><line x1="216" y1="0" x2="216" y2="${totalH}"/><line x1="288" y1="0" x2="288" y2="${totalH}"/><line x1="360" y1="0" x2="360" y2="${totalH}"/><line x1="432" y1="0" x2="432" y2="${totalH}"/><line x1="504" y1="0" x2="504" y2="${totalH}"/><line x1="576" y1="0" x2="576" y2="${totalH}"/><line x1="648" y1="0" x2="648" y2="${totalH}"/>
+            ${Array.from({length:11},(_,i)=>`<line x1="${i*72}" y1="0" x2="${i*72}" y2="${totalH}"/>`).join('')}
             </g>`;
-
-            // Snake grid background lines
             const snakeGridLines = `<g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">${Array.from({ length: ROWS_S + 1 }, (_, i) => `<line x1="${PADX}" y1="${sOff + PADY + i * STEP}" x2="${PADX + COLS_S * STEP}" y2="${sOff + PADY + i * STEP}"/>`).join('')}</g>`;
 
-            const profileCard = `<svg xmlns="http://www.w3.org/2000/svg" width="${PW}" height="${totalH}" viewBox="0 0 ${PW} ${totalH}">
+            // ── Assemble final SVG ──
+            const heroX = (720 - 900) / 2;
+            const profileSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${PW}" height="${totalH}" viewBox="0 0 ${PW} ${totalH}">
             <defs>
-            <filter id="g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <linearGradient id="bar1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#D4A5FF"/></linearGradient>
-            <linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
-            <linearGradient id="bar3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B59B6"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
-            <linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00ff88"/><stop offset="50%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
-            <radialGradient id="orb1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <filter id="h_glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="h_glow-strong"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="h_aurora1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0"/><stop offset="30%" stop-color="#FF69B4" stop-opacity="0.6"/><stop offset="70%" stop-color="#9B59B6" stop-opacity="0.6"/><stop offset="100%" stop-color="#9B59B6" stop-opacity="0"/></linearGradient>
+            <linearGradient id="h_aurora2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0"/><stop offset="40%" stop-color="#00D4FF" stop-opacity="0.4"/><stop offset="60%" stop-color="#FF69B4" stop-opacity="0.4"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="0"/></linearGradient>
+            <linearGradient id="h_text-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4"/><stop offset="50%" stop-color="#D4A5FF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+            <radialGradient id="h_dot-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.8"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="0"/></radialGradient>
+            <radialGradient id="h_orb" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.15"/><stop offset="50%" stop-color="#9B59B6" stop-opacity="0.05"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient>
+            <filter id="a_glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="a_glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="a_glow-core"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <radialGradient id="a_bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="60%" stop-color="#9B59B6" stop-opacity="0.03"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <radialGradient id="a_core-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.6"/><stop offset="40%" stop-color="#D4A5FF" stop-opacity="0.2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <linearGradient id="a_ring-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#9B59B6"/></linearGradient>
+            <filter id="p_g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="p_g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="p_gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="p_bar1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#D4A5FF"/></linearGradient>
+            <linearGradient id="p_bar2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
+            <linearGradient id="p_bar3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B59B6"/><stop offset="100%" stop-color="#FF69B4"/></linearGradient>
+            <linearGradient id="p_sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00ff88"/><stop offset="50%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+            <radialGradient id="p_orb1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient>
             </defs>
             <rect width="${PW}" height="${totalH}" fill="#0a0a1a"/>
-            <circle cx="180" cy="${dOff + 160}" r="120" fill="url(#orb1)"/>
-            <circle cx="540" cy="${dOff + 160}" r="100" fill="url(#orb1)"/>
             ${gridLines}
+            <!-- Hero Banner -->
+            <g transform="translate(${heroX},0)">
+            ${heroInner}
+            </g>
+            <!-- Separator -->
+            <line x1="30" y1="${heroH + SEP/2}" x2="${PW-30}" y2="${heroH + SEP/2}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
+            <!-- Arsenal -->
+            <g transform="translate(0,${heroH + SEP})">
+            ${arsenalInner}
+            </g>
+            <!-- Separator -->
+            <line x1="30" y1="${heroH + SEP + arsenalH + SEP/2}" x2="${PW-30}" y2="${heroH + SEP + arsenalH + SEP/2}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
+            <!-- Profile Card -->
+            <g transform="translate(0,${heroH + SEP + arsenalH + SEP})">
+            <circle cx="180" cy="${dOff + 160}" r="120" fill="url(#p_orb1)"/>
+            <circle cx="540" cy="${dOff + 160}" r="100" fill="url(#p_orb1)"/>
             ${projSection}
             <line x1="30" y1="${projH}" x2="${PW - 30}" y2="${projH}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
             ${dashSection}
             <line x1="30" y1="${projH + SEP + dashH}" x2="${PW - 30}" y2="${projH + SEP + dashH}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
             ${snakeGridLines}
             ${snakeSection}
+            </g>
             </svg>`;
 
-            fs.writeFileSync('profile-card.svg', profileCard);
+            fs.writeFileSync('profile-card.svg', profileSvg);
             console.log(`Generated: ${commits} contributions, ${repoCount} repos, ${followers} followers, ${nonFork.length} projects, total height ${totalH}px`);
         env:
           PAT: ${{ secrets.PAT }}
