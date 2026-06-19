@@ -2,8 +2,10 @@
   <defs>
     <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="glow-core"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="sun-glow"><feGaussianBlur stdDeviation="15" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-core" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="sun-glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="20" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="corona-blur" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="25"/></filter>
+    <filter id="corona-blur-wide" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="40"/></filter>
     <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="60%" stop-color="#9B59B6" stop-opacity="0.03"/><stop offset="100%" stop-color="transparent"/></radialGradient>
     <radialGradient id="sun-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF8E1"/><stop offset="30%" stop-color="#FFD54F"/><stop offset="60%" stop-color="#FF9800"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="0"/></radialGradient>
     <radialGradient id="sun-corona" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFD54F" stop-opacity="0.4"/><stop offset="50%" stop-color="#FF9800" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient>
@@ -25,62 +27,46 @@
   <!-- Inner orbit: rx=240, ry=50 -->
   <ellipse cx="480" cy="200" rx="240" ry="50" fill="none" stroke="#D4A5FF" stroke-width="0.4" opacity="0.08" stroke-dasharray="4 8"/>
 
-  <!-- Sun core with soft glow -->
-  <circle cx="480" cy="200" r="50" fill="url(#sun-corona)" filter="url(#sun-glow)" opacity="0.6">
-    <animate attributeName="r" values="45;55;45" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.5;0.7;0.5" dur="4s" repeatCount="indefinite"/>
-  </circle>
-  <g filter="url(#glow-core)">
-    <circle cx="480" cy="200" r="18" fill="url(#sun-grad)" opacity="0.95">
-      <animate attributeName="r" values="16;20;16" dur="3s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="474" cy="195" r="4" fill="#FFF8E1" opacity="0.3">
-      <animate attributeName="opacity" values="0.3;0.5;0.3" dur="5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="488" cy="205" r="3" fill="#FFF8E1" opacity="0.2">
-      <animate attributeName="opacity" values="0.2;0.4;0.2" dur="4s" repeatCount="indefinite"/>
-    </circle>
-  </g>
+  <!-- Sun: soft borderless glow layers -->
 
-  <!-- Pulsating corona ripples (expanding light waves) -->
-  <circle cx="480" cy="200" r="20" fill="none" stroke="#FFD54F" stroke-width="2.5" opacity="0">
-    <animate attributeName="r" values="20;80" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="2.5;0.5" dur="3s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="480" cy="200" r="20" fill="none" stroke="#FFD54F" stroke-width="2.5" opacity="0">
-    <animate attributeName="r" values="20;80" dur="3s" begin="-1s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0" dur="3s" begin="-1s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="2.5;0.5" dur="3s" begin="-1s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="480" cy="200" r="20" fill="none" stroke="#FFD54F" stroke-width="2.5" opacity="0">
-    <animate attributeName="r" values="20;80" dur="3s" begin="-2s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0" dur="3s" begin="-2s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="2.5;0.5" dur="3s" begin="-2s" repeatCount="indefinite"/>
+  <!-- Outermost ambient glow (very wide, very soft) -->
+  <circle cx="480" cy="200" r="80" fill="#FF9800" filter="url(#corona-blur-wide)" opacity="0">
+    <animate attributeName="r" values="70;95;70" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.08;0.18;0.08" dur="6s" repeatCount="indefinite"/>
   </circle>
 
-  <!-- Second layer: wider, slower, dimmer ripples -->
-  <circle cx="480" cy="200" r="25" fill="none" stroke="#FF9800" stroke-width="1.5" opacity="0">
-    <animate attributeName="r" values="25;120" dur="5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.3;0" dur="5s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="1.5;0.3" dur="5s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="480" cy="200" r="25" fill="none" stroke="#FF9800" stroke-width="1.5" opacity="0">
-    <animate attributeName="r" values="25;120" dur="5s" begin="-2.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.3;0" dur="5s" begin="-2.5s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="1.5;0.3" dur="5s" begin="-2.5s" repeatCount="indefinite"/>
+  <!-- Mid corona glow -->
+  <circle cx="480" cy="200" r="55" fill="#FFD54F" filter="url(#corona-blur)" opacity="0">
+    <animate attributeName="r" values="48;65;48" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.15;0.3;0.15" dur="4s" repeatCount="indefinite"/>
   </circle>
 
-  <!-- Third layer: subtle pink outer glow -->
-  <circle cx="480" cy="200" r="30" fill="none" stroke="#FF69B4" stroke-width="1" opacity="0">
-    <animate attributeName="r" values="30;90" dur="4s" begin="-1.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.2;0" dur="4s" begin="-1.5s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="1;0.2" dur="4s" begin="-1.5s" repeatCount="indefinite"/>
+  <!-- Inner corona glow -->
+  <circle cx="480" cy="200" r="35" fill="#FFD54F" filter="url(#sun-glow)" opacity="0">
+    <animate attributeName="r" values="30;42;30" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="480" cy="200" r="30" fill="none" stroke="#FF69B4" stroke-width="1" opacity="0">
-    <animate attributeName="r" values="30;90" dur="4s" begin="-3.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.2;0" dur="4s" begin="-3.5s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-width" values="1;0.2" dur="4s" begin="-3.5s" repeatCount="indefinite"/>
+
+  <!-- Breathing pulse layers (soft fill, no stroke) -->
+  <circle cx="480" cy="200" r="30" fill="#FFD54F" opacity="0">
+    <animate attributeName="r" values="25;45;25" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.05;0.12;0.05" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="480" cy="200" r="25" fill="#FF9800" opacity="0">
+    <animate attributeName="r" values="20;38;20" dur="7s" begin="-2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.04;0.1;0.04" dur="7s" begin="-2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="480" cy="200" r="28" fill="#FF69B4" opacity="0">
+    <animate attributeName="r" values="22;42;22" dur="8s" begin="-4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.03;0.08;0.03" dur="8s" begin="-4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Sun core (solid center) -->
+  <circle cx="480" cy="200" r="16" fill="url(#sun-grad)" filter="url(#glow-core)" opacity="0.95">
+    <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="480" cy="200" r="8" fill="#FFF8E1" opacity="0.5">
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" repeatCount="indefinite"/>
   </circle>
 
   <!-- ═══ OUTER RING: 8 icons, elliptical orbit, 65s ═══ -->
