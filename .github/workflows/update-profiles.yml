@@ -51,7 +51,7 @@ jobs:
 
             // ── Process arsenal (720x360) ──
             let arsenalInner = svgInner(arsenalSvg);
-            const arsenalIds = ['glow','glow-s','glow-core','bg-glow','sun-glow','sun-grad','sun-corona','ring-grad'];
+            const arsenalIds = ['glow','glow-s','glow-core','bg-glow','sun-glow','sun-grad','sun-corona','corona-blur','corona-blur-wide','ring-grad'];
             arsenalInner = prefixIds(arsenalInner, 'a_', arsenalIds);
             // Remove its background rects
             arsenalInner = arsenalInner.replace(/<rect[^>]*fill="#0a0a1a"[^>]*\/?>/, '');
