@@ -233,9 +233,13 @@ jobs:
             <radialGradient id="h_orb" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.15"/><stop offset="50%" stop-color="#9B59B6" stop-opacity="0.05"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient>
             <filter id="a_glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             <filter id="a_glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="a_glow-core"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="a_glow-core" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="a_sun-glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="20" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="a_corona-blur" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="25"/></filter>
+            <filter id="a_corona-blur-wide" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="40"/></filter>
             <radialGradient id="a_bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="60%" stop-color="#9B59B6" stop-opacity="0.03"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-            <radialGradient id="a_core-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.6"/><stop offset="40%" stop-color="#D4A5FF" stop-opacity="0.2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <radialGradient id="a_sun-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF8E1"/><stop offset="30%" stop-color="#FFD54F"/><stop offset="60%" stop-color="#FF9800"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="0"/></radialGradient>
+            <radialGradient id="a_sun-corona" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFD54F" stop-opacity="0.4"/><stop offset="50%" stop-color="#FF9800" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient>
             <linearGradient id="a_ring-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF69B4"/><stop offset="100%" stop-color="#9B59B6"/></linearGradient>
             <filter id="p_g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             <filter id="p_g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
