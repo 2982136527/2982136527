@@ -437,3 +437,4 @@ jobs:
           git add profile-card.svg
           git diff --cached --quiet || git commit -m "chore: update profile card"
           git push
+
