@@ -199,8 +199,8 @@
 </g>
 <!-- Separator -->
 <line x1="30" y1="267.5" x2="930" y2="267.5" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
-<!-- Arsenal (720px scaled to 960px) -->
-<g transform="translate(0,275) scale(1.3333333333333333)">
+<!-- Arsenal (inner scale(1.2) = 864px, centered in 960px) -->
+<g transform="translate(48,275)">
 <defs>
     <filter id="a_glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="a_glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -429,7 +429,7 @@
 <g>
 <rect x="40" y="488" width="270" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
 <text x="60" y="515" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
-<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">333<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
+<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">331<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
 <rect x="60" y="561" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
 <rect x="60" y="561" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
 </g>
