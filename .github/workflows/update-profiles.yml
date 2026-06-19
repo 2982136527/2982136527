@@ -255,8 +255,8 @@ jobs:
             </g>
             <!-- Separator -->
             <line x1="30" y1="${heroH + SEP/2}" x2="${PW-30}" y2="${heroH + SEP/2}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
-            <!-- Arsenal (720px scaled to 960px) -->
-            <g transform="translate(0,${heroH + SEP}) scale(${PW/720})">
+            <!-- Arsenal (inner scale(1.2) = 864px, centered in 960px) -->
+            <g transform="translate(${(PW-720*1.2)/2},${heroH + SEP})">
             ${arsenalInner}
             </g>
             <!-- Separator -->
