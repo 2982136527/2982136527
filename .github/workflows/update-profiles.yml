@@ -117,15 +117,15 @@ jobs:
             // ── Section offsets ──
             const heroH = 260, arsenalH = 360, SEP = 15;
             const nonFork = repos.filter(r => !r.fork);
-            const COLS_P = 3, COL_W = 215, COL_GAP = 20, PAD_P = 30, ROW_H = 58;
+            const COLS_P = 4, COL_W = 200, COL_GAP = 16, PAD_P = 40, ROW_H = 58;
             const rows_P = Math.ceil(nonFork.length / COLS_P);
             const projH = 50 + rows_P * ROW_H + 20;
             const dashH = 320;
-            const COLS_S = weeks.length, ROWS_S = 7, CELL = 12, STEP = 14, PADX = 35, PADY = 22;
+            const COLS_S = weeks.length, ROWS_S = 7, CELL = 12, STEP = 14, PADX = 90, PADY = 22;
             const snakeH = PADY + ROWS_S * STEP + 30;
             const profileH = projH + SEP + dashH + SEP + snakeH;
             const totalH = heroH + SEP + arsenalH + SEP + profileH;
-            const PW = 720;
+            const PW = 960;
 
             // ── Projects section ──
             const colors_P = ['#FF69B4','#D4A5FF','#00D4FF','#00ff88','#FF69B4','#D4A5FF'];
@@ -160,31 +160,32 @@ jobs:
             <rect x="155" y="${yr}" width="0" height="10" rx="5" fill="url(#${bg[i]})" opacity="0.8"><animate attributeName="width" from="0" to="${bw}" dur="1.2s" fill="freeze" begin="${(.8 + i * .2).toFixed(1)}s"/></rect>
             <text x="${165 + bw}" y="${y}" font-family="'Courier New', monospace" font-size="13" fill="${bc[i]}" opacity="0.4">${l.pct}%</text>`;
             });
-            const dashSection = `<text x="360" y="${dOff + 35}" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">ACTIVITY DASHBOARD<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
+            const CW = 270, CG = 25; // card width and gap
+            const dashSection = `<text x="${PW/2}" y="${dOff + 35}" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">ACTIVITY DASHBOARD<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
             <g>
-            <rect x="30" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
-            <text x="50" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
-            <text x="50" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
-            <rect x="50" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
-            <rect x="50" y="${dOff + 128}" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
+            <rect x="40" y="${dOff + 55}" width="${CW}" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
+            <text x="60" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
+            <text x="60" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">${commits.toLocaleString()}<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
+            <rect x="60" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
+            <rect x="60" y="${dOff + 128}" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
             </g>
             <g>
-            <rect x="258" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/>
-            <text x="278" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text>
-            <text x="278" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#p_g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
-            <rect x="278" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect>
-            <rect x="278" y="${dOff + 128}" width="110" height="3" rx="1.5" fill="url(#p_bar2)" opacity="0.1"/>
+            <rect x="${40+CW+CG}" y="${dOff + 55}" width="${CW}" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/>
+            <text x="${60+CW+CG}" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text>
+            <text x="${60+CW+CG}" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#p_g1)">${repoCount}<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
+            <rect x="${60+CW+CG}" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect>
+            <rect x="${60+CW+CG}" y="${dOff + 128}" width="110" height="3" rx="1.5" fill="url(#p_bar2)" opacity="0.1"/>
             </g>
             <g>
-            <rect x="486" y="${dOff + 55}" width="205" height="85" rx="8" fill="white" opacity="0.03" stroke="#00D4FF" stroke-width="0.5" stroke-opacity="0.15"/>
-            <text x="506" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#00D4FF" opacity="0.5" letter-spacing="3">FOLLOWERS</text>
-            <text x="506" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#p_g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text>
-            <rect x="506" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect>
-            <rect x="506" y="${dOff + 128}" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#p_bar3)" opacity="0.1"/>
+            <rect x="${40+2*(CW+CG)}" y="${dOff + 55}" width="${CW}" height="85" rx="8" fill="white" opacity="0.03" stroke="#00D4FF" stroke-width="0.5" stroke-opacity="0.15"/>
+            <text x="${60+2*(CW+CG)}" y="${dOff + 82}" font-family="'Courier New', monospace" font-size="11" fill="#00D4FF" opacity="0.5" letter-spacing="3">FOLLOWERS</text>
+            <text x="${60+2*(CW+CG)}" y="${dOff + 118}" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#00D4FF" filter="url(#p_g1)">${followers}<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></text>
+            <rect x="${60+2*(CW+CG)}" y="${dOff + 128}" width="0" height="3" rx="1.5" fill="url(#p_bar3)"><animate attributeName="width" from="0" to="${Math.max(20, followers * 20)}" dur="1.5s" fill="freeze" begin="0.7s"/></rect>
+            <rect x="${60+2*(CW+CG)}" y="${dOff + 128}" width="${Math.max(20, followers * 20)}" height="3" rx="1.5" fill="url(#p_bar3)" opacity="0.1"/>
             </g>
-            <line x1="50" y1="${dOff + 160}" x2="670" y2="${dOff + 160}" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>
+            <line x1="50" y1="${dOff + 160}" x2="${PW-50}" y2="${dOff + 160}" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>
             ${lb}
-            <g transform="translate(630, ${dOff + 220})">
+            <g transform="translate(${PW-90}, ${dOff + 220})">
             <circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.1" stroke-dasharray="226.2" stroke-dashoffset="0"/>
             <circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.7" stroke-dasharray="226.2" stroke-dashoffset="226.2" stroke-linecap="round" transform="rotate(-90)"><animate attributeName="stroke-dashoffset" from="226.2" to="${dashOff}" dur="1.5s" fill="freeze" begin="0.5s"/></circle>
             <text x="0" y="6" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" font-weight="bold" fill="#FF69B4">${streakPct}%<animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></text>
@@ -216,7 +217,7 @@ jobs:
 
             // ── Grid lines ──
             const gridLines = `<g opacity="0.03" stroke="#FF69B4" stroke-width="0.5">
-            ${Array.from({length:11},(_,i)=>`<line x1="${i*72}" y1="0" x2="${i*72}" y2="${totalH}"/>`).join('')}
+            ${Array.from({length:13},(_,i)=>`<line x1="${i*80}" y1="0" x2="${i*80}" y2="${totalH}"/>`).join('')}
             </g>`;
             const snakeGridLines = `<g opacity="0.06" stroke="#FF69B4" stroke-width="0.3">${Array.from({ length: ROWS_S + 1 }, (_, i) => `<line x1="${PADX}" y1="${sOff + PADY + i * STEP}" x2="${PADX + COLS_S * STEP}" y2="${sOff + PADY + i * STEP}"/>`).join('')}</g>`;
 
@@ -248,22 +249,22 @@ jobs:
             </defs>
             <rect width="${PW}" height="${totalH}" fill="#0a0a1a"/>
             ${gridLines}
-            <!-- Hero Banner -->
-            <g transform="translate(${heroX},0)">
+            <!-- Hero Banner (900px centered in 960px) -->
+            <g transform="translate(${(PW-900)/2},0)">
             ${heroInner}
             </g>
             <!-- Separator -->
             <line x1="30" y1="${heroH + SEP/2}" x2="${PW-30}" y2="${heroH + SEP/2}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
-            <!-- Arsenal -->
-            <g transform="translate(0,${heroH + SEP})">
+            <!-- Arsenal (720px scaled to 960px) -->
+            <g transform="translate(0,${heroH + SEP}) scale(${PW/720})">
             ${arsenalInner}
             </g>
             <!-- Separator -->
             <line x1="30" y1="${heroH + SEP + arsenalH + SEP/2}" x2="${PW-30}" y2="${heroH + SEP + arsenalH + SEP/2}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
             <!-- Profile Card -->
             <g transform="translate(0,${heroH + SEP + arsenalH + SEP})">
-            <circle cx="180" cy="${dOff + 160}" r="120" fill="url(#p_orb1)"/>
-            <circle cx="540" cy="${dOff + 160}" r="100" fill="url(#p_orb1)"/>
+            <circle cx="200" cy="${dOff + 160}" r="140" fill="url(#p_orb1)"/>
+            <circle cx="${PW-200}" cy="${dOff + 160}" r="120" fill="url(#p_orb1)"/>
             ${projSection}
             <line x1="30" y1="${projH}" x2="${PW - 30}" y2="${projH}" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
             ${dashSection}
