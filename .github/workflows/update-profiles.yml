@@ -172,19 +172,19 @@ jobs:
             const AS = 960, AY = 200, ACX = 480;
             const OUTER_RX = 380, OUTER_RY = 80, OUTER_DUR = 65;
             const INNER_RX = 240, INNER_RY = 50, INNER_DUR = 40;
-            const ORBIT_PATH_O = `M${ACX+OUTER_RX},${AY} A${OUTER_RX},${OUTER_RY} 0 1,1 ${ACX-OUTER_RX},${AY} A${OUTER_RX},${OUTER_RY} 0 1,1 ${ACX+OUTER_RX},${AY}`;
-            const ORBIT_PATH_I = `M${ACX+INNER_RX},${AY} A${INNER_RX},${INNER_RY} 0 1,0 ${ACX-INNER_RX},${AY} A${INNER_RX},${INNER_RY} 0 1,0 ${ACX+INNER_RX},${AY}`;
+            const ORBIT_PATH_O = 'M' + (ACX+OUTER_RX) + ',' + AY + ' A' + OUTER_RX + ',' + OUTER_RY + ' 0 1,1 ' + (ACX-OUTER_RX) + ',' + AY + ' A' + OUTER_RX + ',' + OUTER_RY + ' 0 1,1 ' + (ACX+OUTER_RX) + ',' + AY;
+            const ORBIT_PATH_I = 'M' + (ACX+INNER_RX) + ',' + AY + ' A' + INNER_RX + ',' + INNER_RY + ' 0 1,0 ' + (ACX-INNER_RX) + ',' + AY + ' A' + INNER_RX + ',' + INNER_RY + ' 0 1,0 ' + (ACX+INNER_RX) + ',' + AY;
 
             let outerIcons = '';
             outerLangs.forEach((entry, i) => {
               const [name] = entry;
               const cfg = langConfig(name);
               const begin = -(i * OUTER_DUR / outerLangs.length).toFixed(3);
-              outerIcons += `
-      <g filter="url(#a_glow-s)"><animateMotion dur="${OUTER_DUR}s" repeatCount="indefinite" begin="${begin}s" rotate="auto" path="${ORBIT_PATH_O}"/>
-        ${techIcon(cfg)}
-        <animate attributeName="opacity" values="0.9;1;0.9" dur="${3 + i * 0.3}s" repeatCount="indefinite"/>
-      </g>`;
+              const animDur = (3 + i * 0.3).toFixed(1);
+              outerIcons += '<g filter="url(#a_glow-s)"><animateMotion dur="' + OUTER_DUR + 's" repeatCount="indefinite" begin="' + begin + 's" rotate="auto" path="' + ORBIT_PATH_O + '"/>';
+              outerIcons += techIcon(cfg);
+              outerIcons += '<animate attributeName="opacity" values="0.9;1;0.9" dur="' + animDur + 's" repeatCount="indefinite"/>';
+              outerIcons += '</g>';
             });
 
             let innerIcons = '';
@@ -192,11 +192,11 @@ jobs:
               const [name] = entry;
               const cfg = langConfig(name);
               const begin = -(i * INNER_DUR / Math.max(innerLangs.length, 1)).toFixed(3);
-              innerIcons += `
-      <g filter="url(#a_glow-s)"><animateMotion dur="${INNER_DUR}s" repeatCount="indefinite" begin="${begin}s" rotate="auto" path="${ORBIT_PATH_I}"/>
-        ${techIcon(cfg)}
-        <animate attributeName="opacity" values="0.9;1;0.9" dur="${3.5 + i * 0.4}s" repeatCount="indefinite"/>
-      </g>`;
+              const animDur = (3.5 + i * 0.4).toFixed(1);
+              innerIcons += '<g filter="url(#a_glow-s)"><animateMotion dur="' + INNER_DUR + 's" repeatCount="indefinite" begin="' + begin + 's" rotate="auto" path="' + ORBIT_PATH_I + '"/>';
+              innerIcons += techIcon(cfg);
+              innerIcons += '<animate attributeName="opacity" values="0.9;1;0.9" dur="' + animDur + 's" repeatCount="indefinite"/>';
+              innerIcons += '</g>';
             });
 
             // Sparkle particles
@@ -205,59 +205,34 @@ jobs:
               const c = colors[i % 3];
               const dur = 18 + i * 3;
               const r = 1.5 + (i % 3) * 0.5;
-              const paths = [ORBIT_PATH_O, ORBIT_PATH_I, `M${ACX+OUTER_RX+40},${AY} A${OUTER_RX+40},${OUTER_RY+10} 0 1,1 ${ACX-OUTER_RX-40},${AY} A${OUTER_RX+40},${OUTER_RY+10} 0 1,1 ${ACX+OUTER_RX+40},${AY}`];
+              const sparklePath = 'M' + (ACX+OUTER_RX+40) + ',' + AY + ' A' + (OUTER_RX+40) + ',' + (OUTER_RY+10) + ' 0 1,1 ' + (ACX-OUTER_RX-40) + ',' + AY + ' A' + (OUTER_RX+40) + ',' + (OUTER_RY+10) + ' 0 1,1 ' + (ACX+OUTER_RX+40) + ',' + AY;
+              const paths = [ORBIT_PATH_O, ORBIT_PATH_I, sparklePath];
               const p = paths[i % 3];
-              return `<g><animateMotion dur="${dur}s" repeatCount="indefinite" begin="${-i*3}s" rotate="auto" path="${p}"/>
-        <circle r="${r}" fill="${c}" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="${2 + i*0.3}s" repeatCount="indefinite"/></circle>
-      </g>`;
+              const circleDur = (2 + i*0.3).toFixed(1);
+              let s = '<g><animateMotion dur="' + dur + 's" repeatCount="indefinite" begin="' + (-i*3) + 's" rotate="auto" path="' + p + '"/>';
+              s += '<circle r="' + r + '" fill="' + c + '" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="' + circleDur + 's" repeatCount="indefinite"/></circle>';
+              s += '</g>';
+              return s;
             }).join('');
 
-            const arsenalSection = `
-      <!-- Grid -->
-      <g opacity="0.03" stroke="#FF69B4" stroke-width="0.5">
-        ${Array.from({length:13},(_,i)=>`<line x1="${i*80}" y1="0" x2="${i*80}" y2="420"/>`).join('')}
-        ${Array.from({length:8},(_,i)=>`<line x1="0" y1="${i*60}" x2="${AS}" y2="${i*60}"/>`).join('')}
-      </g>
-      <!-- Elliptical orbits -->
-      <ellipse cx="${ACX}" cy="${AY}" rx="${OUTER_RX}" ry="${OUTER_RY}" fill="none" stroke="#FF69B4" stroke-width="0.5" opacity="0.12"/>
-      <ellipse cx="${ACX}" cy="${AY}" rx="${INNER_RX}" ry="${INNER_RY}" fill="none" stroke="#D4A5FF" stroke-width="0.4" opacity="0.08" stroke-dasharray="4 8"/>
-      <!-- Sun: soft borderless glow layers -->
-      <circle cx="${ACX}" cy="${AY}" r="80" fill="#FF9800" filter="url(#a_corona-blur-wide)" opacity="0">
-        <animate attributeName="r" values="70;95;70" dur="6s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.08;0.18;0.08" dur="6s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="55" fill="#FFD54F" filter="url(#a_corona-blur)" opacity="0">
-        <animate attributeName="r" values="48;65;48" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.15;0.3;0.15" dur="4s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="35" fill="#FFD54F" filter="url(#a_sun-glow)" opacity="0">
-        <animate attributeName="r" values="30;42;30" dur="3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="30" fill="#FFD54F" opacity="0">
-        <animate attributeName="r" values="25;45;25" dur="5s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.05;0.12;0.05" dur="5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="25" fill="#FF9800" opacity="0">
-        <animate attributeName="r" values="20;38;20" dur="7s" begin="-2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.04;0.1;0.04" dur="7s" begin="-2s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="28" fill="#FF69B4" opacity="0">
-        <animate attributeName="r" values="22;42;22" dur="8s" begin="-4s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.03;0.08;0.03" dur="8s" begin="-4s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="16" fill="url(#a_sun-grad)" filter="url(#a_glow-core)" opacity="0.95">
-        <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${ACX}" cy="${AY}" r="8" fill="#FFF8E1" opacity="0.5">
-        <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" repeatCount="indefinite"/>
-      </circle>
-      <!-- Tech icons -->
-      ${outerIcons}
-      ${innerIcons}
-      ${sparkles}
-      <!-- Label -->
-      <text x="${ACX}" y="390" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#FF69B4" opacity="0.4" letter-spacing="6">TECH ARSENAL<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>`;
+            let arsenalSection = '<!-- Grid --><g opacity="0.03" stroke="#FF69B4" stroke-width="0.5">';
+            for (let i = 0; i < 13; i++) arsenalSection += '<line x1="' + (i*80) + '" y1="0" x2="' + (i*80) + '" y2="420"/>';
+            for (let i = 0; i < 8; i++) arsenalSection += '<line x1="0" y1="' + (i*60) + '" x2="' + AS + '" y2="' + (i*60) + '"/>';
+            arsenalSection += '</g>';
+            arsenalSection += '<!-- Elliptical orbits -->';
+            arsenalSection += '<ellipse cx="' + ACX + '" cy="' + AY + '" rx="' + OUTER_RX + '" ry="' + OUTER_RY + '" fill="none" stroke="#FF69B4" stroke-width="0.5" opacity="0.12"/>';
+            arsenalSection += '<ellipse cx="' + ACX + '" cy="' + AY + '" rx="' + INNER_RX + '" ry="' + INNER_RY + '" fill="none" stroke="#D4A5FF" stroke-width="0.4" opacity="0.08" stroke-dasharray="4 8"/>';
+            arsenalSection += '<!-- Sun: soft borderless glow layers -->';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="80" fill="#FF9800" filter="url(#a_corona-blur-wide)" opacity="0"><animate attributeName="r" values="70;95;70" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.08;0.18;0.08" dur="6s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="55" fill="#FFD54F" filter="url(#a_corona-blur)" opacity="0"><animate attributeName="r" values="48;65;48" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.15;0.3;0.15" dur="4s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="35" fill="#FFD54F" filter="url(#a_sun-glow)" opacity="0"><animate attributeName="r" values="30;42;30" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="30" fill="#FFD54F" opacity="0"><animate attributeName="r" values="25;45;25" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.05;0.12;0.05" dur="5s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="25" fill="#FF9800" opacity="0"><animate attributeName="r" values="20;38;20" dur="7s" begin="-2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.04;0.1;0.04" dur="7s" begin="-2s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="28" fill="#FF69B4" opacity="0"><animate attributeName="r" values="22;42;22" dur="8s" begin="-4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.03;0.08;0.03" dur="8s" begin="-4s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="16" fill="url(#a_sun-grad)" filter="url(#a_glow-core)" opacity="0.95"><animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<circle cx="' + ACX + '" cy="' + AY + '" r="8" fill="#FFF8E1" opacity="0.5"><animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" repeatCount="indefinite"/></circle>';
+            arsenalSection += '<!-- Tech icons -->' + outerIcons + innerIcons + sparkles;
+            arsenalSection += '<!-- Label --><text x="' + ACX + '" y="390" text-anchor="middle" font-family="\'Courier New\', monospace" font-size="10" fill="#FF69B4" opacity="0.4" letter-spacing="6">TECH ARSENAL<animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite"/></text>';
 
             // ══════════════════════════════════════════════
             // ── Section offsets ──
