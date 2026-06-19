@@ -222,97 +222,97 @@
 <circle cx="760" cy="593" r="120" fill="url(#p_orb1)"/>
 <text x="480" y="32" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">PROJECTS<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
 <text x="930" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">23 repos</text>
-<text x="40" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AI-Chimera-P</text>
+<text x="40" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">2982136527</text>
 <text x="230" y="64" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="40" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">基于gemini生成竖屏幻兽卡片</text>
-<circle cx="40" cy="88" r="3" fill="#FF69B4" opacity="0.6"/><text x="48" y="92" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">TypeScript</text>
-<rect x="32" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AI-Chimera</text>
+<text x="40" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Config files for my GitHub profile.</text>
+
+<rect x="32" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">AI-Chimera-P</text>
 <text x="446" y="64" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="256" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">基于gemini生成方形幻兽卡片</text>
+<text x="256" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">基于gemini生成竖屏幻兽卡片</text>
 <circle cx="256" cy="88" r="3" fill="#D4A5FF" opacity="0.6"/><text x="264" y="92" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
-<rect x="248" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">docker-status-monitor</text>
+<rect x="248" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">AI-Chimera</text>
 <text x="662" y="64" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="472" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Docker 容器状态监控面板</text>
+<text x="472" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">基于gemini生成方形幻兽卡片</text>
 <circle cx="472" cy="88" r="3" fill="#00D4FF" opacity="0.6"/><text x="480" y="92" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">TypeScript</text>
-<rect x="464" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">2982136527</text>
+<rect x="464" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="64" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">docker-status-monitor</text>
 <text x="878" y="64" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="688" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Config files for my Gi...</text>
-
-<rect x="680" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">github-profile-card</text>
+<text x="688" y="80" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Docker 容器状态监控面板</text>
+<circle cx="688" cy="88" r="3" fill="#00ff88" opacity="0.6"/><text x="696" y="92" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">TypeScript</text>
+<rect x="680" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">github-profile-card</text>
 <text x="230" y="122" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="40" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">动态 GitHub 个人主页 SVG 卡片，...</text>
+<text x="40" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">动态 GitHub 个人主页 SVG 卡片，自动更新编程语言星轨、项目列表和贡献统计</text>
 
-<rect x="32" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mlog</text>
+<rect x="32" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">mlog</text>
 <text x="446" y="122" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="256" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">双语博客系统，支持 AI 写作增强与前台管理...</text>
+<text x="256" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">双语博客系统，支持 AI 写作增强与前台管理发布</text>
 <circle cx="256" cy="146" r="3" fill="#D4A5FF" opacity="0.6"/><text x="264" y="150" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
-<rect x="248" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AureP-app</text>
+<rect x="248" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">AureP-app</text>
 <text x="662" y="122" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-28</text>
-<text x="472" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">AureP 是一款面向手机端的 Emby 播...</text>
+<text x="472" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">AureP 是一款面向手机端的 Emby 播放器，提供安装包下载和版本更新。</text>
 
-<rect x="464" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">claw-blog</text>
+<rect x="464" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="122" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">claw-blog</text>
 <text x="878" y="122" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-03-20</text>
-<text x="688" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">个人博客</text>
+<text x="688" y="138" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">个人博客</text>
 <circle cx="688" cy="146" r="3" fill="#D4A5FF" opacity="0.6"/><text x="696" y="150" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">HTML</text>
-<rect x="680" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">TmdbCacheX</text>
+<rect x="680" y="104" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">TmdbCacheX</text>
 <text x="230" y="180" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2025-12-28</text>
-<text x="40" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">高性能 TMDB 缓存代理服务器，减少 AP...</text>
+<text x="40" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">高性能 TMDB 缓存代理服务器，减少 API 请求频率</text>
 <circle cx="40" cy="204" r="3" fill="#00D4FF" opacity="0.6"/><text x="48" y="208" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">TypeScript</text>
-<rect x="32" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">emby-insight</text>
+<rect x="32" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">emby-insight</text>
 <text x="446" y="180" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2025-12-11</text>
-<text x="256" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Emby 媒体服务器数据分析与监控面板</text>
+<text x="256" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Emby 媒体服务器数据分析与监控面板</text>
 <circle cx="256" cy="204" r="3" fill="#00ff88" opacity="0.6"/><text x="264" y="208" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">TypeScript</text>
-<rect x="248" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">Qpixel_Manager</text>
+<rect x="248" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">Qpixel_Manager</text>
 <text x="662" y="180" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2024-12-29</text>
-<text x="472" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">本地图片管理工具，支持标签、搜索与回收站</text>
+<text x="472" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">本地图片管理工具，支持标签、搜索与回收站</text>
 <circle cx="472" cy="204" r="3" fill="#FF69B4" opacity="0.6"/><text x="480" y="208" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">JavaScript</text>
-<rect x="464" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mmagnet <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="464" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="180" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">mmagnet <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="878" y="180" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="688" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Snapshot-backed magnet...</text>
+<text x="688" y="196" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Snapshot-backed magnet search app for Vercel + GitHub Free</text>
 <circle cx="688" cy="204" r="3" fill="#D4A5FF" opacity="0.6"/><text x="696" y="208" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
-<rect x="680" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mlog-content <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="680" y="162" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">mlog-content <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="230" y="238" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
-<text x="40" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Private content for ML...</text>
+<text x="40" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Private content for MLog</text>
 
-<rect x="32" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">PicaX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="32" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">PicaX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="446" y="238" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-18</text>
-<text x="256" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">PicaX：本地账户与在线账户联动的哔咔漫画...</text>
+<text x="256" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">PicaX：本地账户与在线账户联动的哔咔漫画第三方客户端，集成网页阅读、个人中心、PWA 与命令行爬虫</text>
 <circle cx="256" cy="262" r="3" fill="#D4A5FF" opacity="0.6"/><text x="264" y="266" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
-<rect x="248" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AureP <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="248" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">AureP <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="662" y="238" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-28</text>
-<text x="472" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">AureP private source a...</text>
+<text x="472" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">AureP private source and build artifacts</text>
 <circle cx="472" cy="262" r="3" fill="#00D4FF" opacity="0.6"/><text x="480" y="266" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">Kotlin</text>
-<rect x="464" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">miboy <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="464" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="238" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">miboy <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="878" y="238" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-21</text>
-<text x="688" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">基于 NapCat OneBot 协议的 Q...</text>
+<text x="688" y="254" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">基于 NapCat OneBot 协议的 QQ 机器人，支持 Gemini 与 Qwen 双模型</text>
 <circle cx="688" cy="262" r="3" fill="#00ff88" opacity="0.6"/><text x="696" y="266" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">Python</text>
-<rect x="680" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">novl-ai <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="680" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">novl-ai <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="230" y="296" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-03</text>
-<text x="40" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Novl.AI — Automated lo...</text>
+<text x="40" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">Novl.AI — Automated long-form novel writing system with 9-layer quality gates, 37+ evaluation dimensions, and intelligent memory management</text>
 <circle cx="40" cy="320" r="3" fill="#FF69B4" opacity="0.6"/><text x="48" y="324" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">Go</text>
-<rect x="32" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AureX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="32" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">AureX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="446" y="296" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-27</text>
-<text x="256" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">兼容 Emby 生态的媒体服务端，Rust ...</text>
+<text x="256" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">兼容 Emby 生态的媒体服务端，Rust + React 技术栈</text>
 <circle cx="256" cy="320" r="3" fill="#D4A5FF" opacity="0.6"/><text x="264" y="324" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Rust</text>
-<rect x="248" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">share139-proxy <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="248" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">share139-proxy <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="662" y="296" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-23</text>
-<text x="472" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">139 share proxy, STRM ...</text>
+<text x="472" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">139 share proxy, STRM generator, WebDAV and control panel for China Mobile 139 share links</text>
 
-<rect x="464" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">2dland <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="464" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="688" y="296" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">2dland <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="878" y="296" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-21</text>
-<text x="688" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">统一媒体代理播放、STRM 生成与附件处理工...</text>
+<text x="688" y="312" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">统一媒体代理播放、STRM 生成与附件处理工具</text>
 <circle cx="688" cy="320" r="3" fill="#D4A5FF" opacity="0.6"/><text x="696" y="324" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Python</text>
-<rect x="680" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">Aure <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="680" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="40" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">Aure <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="230" y="354" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-18</text>
-<text x="40" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">No description</text>
+<text x="40" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">No description</text>
 <circle cx="40" cy="378" r="3" fill="#00D4FF" opacity="0.6"/><text x="48" y="382" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">Makefile</text>
-<rect x="32" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">cmws-data <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="32" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="256" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">cmws-data <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="446" y="354" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-12</text>
-<text x="256" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">139 share watch data</text>
+<text x="256" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">139 share watch data</text>
 
-<rect x="248" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">cmws-app <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<rect x="248" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/><text x="472" y="354" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85" textLength="130" lengthAdjust="spacingAndGlyphs">cmws-app <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="662" y="354" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-07</text>
-<text x="472" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">139 share watch app</text>
+<text x="472" y="370" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5" textLength="184" lengthAdjust="spacingAndGlyphs">139 share watch app</text>
 <circle cx="472" cy="378" r="3" fill="#FF69B4" opacity="0.6"/><text x="480" y="382" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">TypeScript</text>
 <rect x="464" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
 <line x1="30" y1="418" x2="930" y2="418" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
@@ -320,7 +320,7 @@
 <g>
 <rect x="40" y="488" width="270" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
 <text x="60" y="515" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
-<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">367<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
+<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">368<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
 <rect x="60" y="561" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
 <rect x="60" y="561" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
 </g>
