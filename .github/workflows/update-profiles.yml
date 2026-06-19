@@ -39,7 +39,13 @@ jobs:
 
             // ── Download static SVGs ──
             const heroSvg = readLocal('hero-banner.svg');
-            const arsenalSvg = readLocal('arsenal.svg');
+            // Read arsenal directly to avoid any caching
+            const arsenalPath = require('path').join(process.env.GITHUB_WORKSPACE, 'arsenal.svg');
+            const arsenalSvg = fs.readFileSync(arsenalPath, 'utf8');
+            console.log('Arsenal path:', arsenalPath);
+            console.log('Arsenal size:', arsenalSvg.length);
+            console.log('Has Pulsating:', arsenalSvg.includes('Pulsating'));
+            console.log('Has Sun rays:', arsenalSvg.includes('Sun rays'));
 
             // ── Process hero-banner (900x260) ──
             let heroInner = svgInner(heroSvg);
