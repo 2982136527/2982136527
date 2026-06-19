@@ -206,8 +206,8 @@
     <filter id="a_glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="a_glow-core" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="a_sun-glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="20" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="corona-blur" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="25"/></filter>
-    <filter id="corona-blur-wide" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="a_corona-blur" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="25"/></filter>
+    <filter id="a_corona-blur-wide" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="40"/></filter>
     <radialGradient id="a_bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF69B4" stop-opacity="0.08"/><stop offset="60%" stop-color="#9B59B6" stop-opacity="0.03"/><stop offset="100%" stop-color="transparent"/></radialGradient>
     <radialGradient id="a_sun-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF8E1"/><stop offset="30%" stop-color="#FFD54F"/><stop offset="60%" stop-color="#FF9800"/><stop offset="100%" stop-color="#FF69B4" stop-opacity="0"/></radialGradient>
     <radialGradient id="a_sun-corona" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFD54F" stop-opacity="0.4"/><stop offset="50%" stop-color="#FF9800" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient>
@@ -232,13 +232,13 @@
   <!-- Sun: soft borderless glow layers -->
 
   <!-- Outermost ambient glow (very wide, very soft) -->
-  <circle cx="480" cy="200" r="80" fill="#FF9800" filter="url(#corona-blur-wide)" opacity="0">
+  <circle cx="480" cy="200" r="80" fill="#FF9800" filter="url(#a_corona-blur-wide)" opacity="0">
     <animate attributeName="r" values="70;95;70" dur="6s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.08;0.18;0.08" dur="6s" repeatCount="indefinite"/>
   </circle>
 
   <!-- Mid corona glow -->
-  <circle cx="480" cy="200" r="55" fill="#FFD54F" filter="url(#corona-blur)" opacity="0">
+  <circle cx="480" cy="200" r="55" fill="#FFD54F" filter="url(#a_corona-blur)" opacity="0">
     <animate attributeName="r" values="48;65;48" dur="4s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.15;0.3;0.15" dur="4s" repeatCount="indefinite"/>
   </circle>
