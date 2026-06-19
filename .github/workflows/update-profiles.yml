@@ -19,7 +19,9 @@ jobs:
 
             // ── Helper: read file from checked-out repo ──
             function readLocal(path) {
-              return fs.readFileSync(path, 'utf8');
+              const fullPath = require('path').join(process.env.GITHUB_WORKSPACE, path);
+              console.log('Reading:', fullPath);
+              return fs.readFileSync(fullPath, 'utf8');
             }
 
             // ── Helper: extract inner SVG content ──
@@ -40,6 +42,7 @@ jobs:
             // ── Download static SVGs ──
             const heroSvg = readLocal('hero-banner.svg');
             const arsenalSvg = readLocal('arsenal.svg');
+            console.log('Arsenal SVG first 200 chars:', arsenalSvg.substring(0, 200));
 
             // ── Process hero-banner (900x260) ──
             let heroInner = svgInner(heroSvg);
