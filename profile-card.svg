@@ -223,18 +223,18 @@
 <circle cx="200" cy="593" r="140" fill="url(#p_orb1)"/>
 <circle cx="760" cy="593" r="120" fill="url(#p_orb1)"/>
 <text x="480" y="32" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">PROJECTS<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
-<text x="930" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">23 repos</text>
+<text x="930" y="32" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#D4A5FF" opacity="0.3">24 repos</text>
 <rect x="32" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
 <g transform="translate(36,48)" clip-path="url(#cardTextClip)">
-<text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">github-profile-card</text>
-<text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-28</text>
-<text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">动态 GitHub 个人主页 SVG 卡片，...</text>
-
-</g><rect x="248" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(252,48)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mpic-images</text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-28</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Mpic image storage</text>
+
+</g><rect x="248" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(252,48)" clip-path="url(#cardTextClip)">
+<text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">github-profile-card</text>
+<text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-28</text>
+<text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">动态 GitHub 个人主页 SVG 卡片，...</text>
 
 </g><rect x="464" y="46" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
 <g transform="translate(468,48)" clip-path="url(#cardTextClip)">
@@ -298,84 +298,90 @@
 <circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">JavaScript</text>
 </g><rect x="32" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
 <g transform="translate(36,222)" clip-path="url(#cardTextClip)">
+<text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mpic-access-logs <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
+<text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-28</text>
+<text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Private access logs fo...</text>
+
+</g><rect x="248" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(252,222)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mlog-content <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-28</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Private content for ML...</text>
 
-</g><rect x="248" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(252,222)" clip-path="url(#cardTextClip)">
+</g><rect x="464" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(468,222)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">PicaX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-27</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">PicaX：本地账户与在线账户联动的哔咔漫画...</text>
-<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
-</g><rect x="464" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(468,222)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#00D4FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">TypeScript</text>
+</g><rect x="680" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(684,222)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">2dland <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-24</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">统一媒体代理播放、STRM 生成与附件处理工...</text>
-<circle cx="4" cy="40" r="3" fill="#00D4FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">Python</text>
-</g><rect x="680" y="220" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(684,222)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#00ff88" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">Python</text>
+</g><rect x="32" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(36,280)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">mmagnet <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-06-19</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Snapshot-backed magnet...</text>
-<circle cx="4" cy="40" r="3" fill="#00ff88" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">TypeScript</text>
-</g><rect x="32" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(36,280)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#FF69B4" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">TypeScript</text>
+</g><rect x="248" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(252,280)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AureP <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-28</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">AureP private source a...</text>
-<circle cx="4" cy="40" r="3" fill="#FF69B4" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">Kotlin</text>
-</g><rect x="248" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(252,280)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Kotlin</text>
+</g><rect x="464" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(468,280)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">miboy <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-21</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">基于 NapCat OneBot 协议的 Q...</text>
-<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Python</text>
-</g><rect x="464" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(468,280)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#FF69B4" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">Python</text>
+</g><rect x="680" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(684,280)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">novl-ai <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-05-03</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">Novl.AI — Automated lo...</text>
-<circle cx="4" cy="40" r="3" fill="#FF69B4" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">Go</text>
-</g><rect x="680" y="278" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(684,280)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Go</text>
+</g><rect x="32" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(36,338)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">AureX <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-27</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">兼容 Emby 生态的媒体服务端，Rust ...</text>
-<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">Rust</text>
-</g><rect x="32" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(36,338)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#00D4FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">Rust</text>
+</g><rect x="248" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(252,338)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">Aure <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-18</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">No description</text>
-<circle cx="4" cy="40" r="3" fill="#00D4FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00D4FF" opacity="0.5">Makefile</text>
-</g><rect x="248" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(252,338)" clip-path="url(#cardTextClip)">
+<circle cx="4" cy="40" r="3" fill="#00ff88" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#00ff88" opacity="0.5">Makefile</text>
+</g><rect x="464" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(468,338)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">cmws-data <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-12</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">139 share watch data</text>
 
-</g><rect x="464" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
-<g transform="translate(468,338)" clip-path="url(#cardTextClip)">
+</g><rect x="680" y="336" width="200" height="52" rx="6" fill="white" opacity="0.02" stroke="#FF69B4" stroke-width="0.3" stroke-opacity="0.08"/>
+<g transform="translate(684,338)" clip-path="url(#cardTextClip)">
 <text x="4" y="16" font-family="'Courier New', monospace" font-size="12" font-weight="bold" fill="#FF69B4" opacity="0.85">cmws-app <tspan fill="#FF69B4" font-size="9" opacity="0.6">Private</tspan></text>
 <text x="186" y="16" text-anchor="end" font-family="sans-serif" font-size="9" fill="#8892b0" opacity="0.35">2026-04-07</text>
 <text x="4" y="32" font-family="sans-serif" font-size="10" fill="#8892b0" opacity="0.5">139 share watch app</text>
-<circle cx="4" cy="40" r="3" fill="#FF69B4" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#FF69B4" opacity="0.5">TypeScript</text>
+<circle cx="4" cy="40" r="3" fill="#D4A5FF" opacity="0.6"/><text x="12" y="44" font-family="sans-serif" font-size="9" fill="#D4A5FF" opacity="0.5">TypeScript</text>
 </g>
 <line x1="30" y1="418" x2="930" y2="418" stroke="#FF69B4" stroke-width="0.5" opacity="0.15"/>
 <text x="480" y="468" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#FF69B4" opacity="0.5" letter-spacing="8">ACTIVITY DASHBOARD<animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/></text>
 <g>
 <rect x="40" y="488" width="270" height="85" rx="8" fill="white" opacity="0.03" stroke="#FF69B4" stroke-width="0.5" stroke-opacity="0.15"/>
 <text x="60" y="515" font-family="'Courier New', monospace" font-size="11" fill="#FF69B4" opacity="0.5" letter-spacing="3">CONTRIBUTIONS</text>
-<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">6,490<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
+<text x="60" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#FF69B4" filter="url(#p_g1)">6,834<animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/></text>
 <rect x="60" y="561" width="0" height="3" rx="1.5" fill="url(#p_bar1)"><animate attributeName="width" from="0" to="165" dur="1.5s" fill="freeze" begin="0.3s"/></rect>
 <rect x="60" y="561" width="165" height="3" rx="1.5" fill="url(#p_bar1)" opacity="0.1"/>
 </g>
 <g>
 <rect x="335" y="488" width="270" height="85" rx="8" fill="white" opacity="0.03" stroke="#D4A5FF" stroke-width="0.5" stroke-opacity="0.15"/>
 <text x="355" y="515" font-family="'Courier New', monospace" font-size="11" fill="#D4A5FF" opacity="0.5" letter-spacing="3">REPOS</text>
-<text x="355" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#p_g1)">26<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
+<text x="355" y="551" font-family="'Courier New', monospace" font-size="42" font-weight="bold" fill="#D4A5FF" filter="url(#p_g1)">27<animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></text>
 <rect x="355" y="561" width="0" height="3" rx="1.5" fill="url(#p_bar2)"><animate attributeName="width" from="0" to="110" dur="1.5s" fill="freeze" begin="0.5s"/></rect>
 <rect x="355" y="561" width="110" height="3" rx="1.5" fill="url(#p_bar2)" opacity="0.1"/>
 </g>
@@ -388,14 +394,14 @@
 </g>
 <line x1="50" y1="593" x2="910" y2="593" stroke="#FF69B4" stroke-width="0.5" opacity="0.1"/>
 <text x="50" y="628" font-family="'Courier New', monospace" font-size="13" fill="#FF69B4" opacity="0.6">TypeScript</text>
-<rect x="155" y="618" width="0" height="10" rx="5" fill="url(#bar1)" opacity="0.8"><animate attributeName="width" from="0" to="492" dur="1.2s" fill="freeze" begin="0.8s"/></rect>
-<text x="657" y="628" font-family="'Courier New', monospace" font-size="13" fill="#FF69B4" opacity="0.4">82%</text><text x="50" y="658" font-family="'Courier New', monospace" font-size="13" fill="#D4A5FF" opacity="0.6">JavaScript</text>
+<rect x="155" y="618" width="0" height="10" rx="5" fill="url(#bar1)" opacity="0.8"><animate attributeName="width" from="0" to="498" dur="1.2s" fill="freeze" begin="0.8s"/></rect>
+<text x="663" y="628" font-family="'Courier New', monospace" font-size="13" fill="#FF69B4" opacity="0.4">83%</text><text x="50" y="658" font-family="'Courier New', monospace" font-size="13" fill="#D4A5FF" opacity="0.6">JavaScript</text>
 <rect x="155" y="648" width="0" height="10" rx="5" fill="url(#bar2)" opacity="0.8"><animate attributeName="width" from="0" to="42" dur="1.2s" fill="freeze" begin="1.0s"/></rect>
 <text x="207" y="658" font-family="'Courier New', monospace" font-size="13" fill="#D4A5FF" opacity="0.4">7%</text><text x="50" y="688" font-family="'Courier New', monospace" font-size="13" fill="#00D4FF" opacity="0.6">HTML</text>
 <rect x="155" y="678" width="0" height="10" rx="5" fill="url(#bar3)" opacity="0.8"><animate attributeName="width" from="0" to="42" dur="1.2s" fill="freeze" begin="1.2s"/></rect>
 <text x="207" y="688" font-family="'Courier New', monospace" font-size="13" fill="#00D4FF" opacity="0.4">7%</text><text x="50" y="718" font-family="'Courier New', monospace" font-size="13" fill="#9B59B6" opacity="0.6">Python</text>
-<rect x="155" y="708" width="0" height="10" rx="5" fill="url(#bar3)" opacity="0.8"><animate attributeName="width" from="0" to="24" dur="1.2s" fill="freeze" begin="1.4s"/></rect>
-<text x="189" y="718" font-family="'Courier New', monospace" font-size="13" fill="#9B59B6" opacity="0.4">4%</text>
+<rect x="155" y="708" width="0" height="10" rx="5" fill="url(#bar3)" opacity="0.8"><animate attributeName="width" from="0" to="18" dur="1.2s" fill="freeze" begin="1.4s"/></rect>
+<text x="183" y="718" font-family="'Courier New', monospace" font-size="13" fill="#9B59B6" opacity="0.4">3%</text>
 <g transform="translate(870, 653)">
 <circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.1" stroke-dasharray="226.2" stroke-dashoffset="0"/>
 <circle cx="0" cy="0" r="36" fill="none" stroke="#FF69B4" stroke-width="2" opacity="0.7" stroke-dasharray="226.2" stroke-dashoffset="226.2" stroke-linecap="round" transform="rotate(-90)"><animate attributeName="stroke-dashoffset" from="226.2" to="0.0" dur="1.5s" fill="freeze" begin="0.5s"/></circle>
